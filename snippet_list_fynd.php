@@ -10,7 +10,9 @@ switch ($fyndtype) {
     $sellClass = 'fynd-list-selected';
     $buyClassHide = 'hidden';
     break;
-  default:
+  default:  //show sell as default
+    $buyClass = 'fynd-list-selected';
+    $sellClassHide = 'hidden';    
     break;
 }
 ?>
