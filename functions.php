@@ -190,11 +190,7 @@ function getFyndList($sell = true) {
   $fyndQuery = new WP_Query(array('post_type' => array('fynd'),'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $arg))));
 
   while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
-    echo '<li><a href="';
-    the_permalink();
-    echo '">';
-    the_title();
-    echo '</a></li>';
+    echo '<li><a href="' . get_permalink() . '?fyndtype=' . $arg . '">' .get_the_title() .'</a></li>';
   endwhile;
   wp_reset_query();
 }

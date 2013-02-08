@@ -54,70 +54,7 @@ global $woo_options;
     <?php woo_main_after(); ?>
 
     <div id="sidebar">
-      <div id="fynd-list-all">
-        <div class="fynd-list-head" ><a href="#" class="fynd-list-selector  fynd-list-selected" >KÖP</a><a href="#"  class="fynd-list-selector" >SÄLJ</a></div>
-          <ul id="list-buy" class="fynd-list">
-            <?php getFyndList(false); ?>
-            <li><a href="/fynd/raclettejarn/">Kastrull</a></li>
-            <li><a href="/fynd/kaffekvarn/">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-          </ul>
-          <ul id="list-sell" class="fynd-list hidden">
-            <?php getFyndList(true); ?>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>
-            <li><a href="#">Kastrull</a></li>
-            <li><a href="#">Mixer</a></li>
-            <li><a href="#">Stekpanna</a></li>
-            <li><a href="#">Wookpanna</a></li>
-            <li><a href="#">Vinglas i kristall</a></li>          </ul>          
-      </div>
+            <?php include_once 'snippet_list_fynd.php'; ?>
       <?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar("fyndhyllan")) : endif; ?>    
     </div>
 
