@@ -24,32 +24,6 @@ switch ($fyndtype) {
   </div>
   <ul id="list-buy" class="fynd-list <?php echo $buyClassHide; ?>">
     <?php getFyndList(false); ?>            
-    <li><a href="#">Stekpanna</a></li>
-    <li><a href="#">Wookpanna</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Kastrull</a></li>
-    <li><a href="#">Mixer</a></li>
-    <li><a href="#">Stekpanna</a></li>
-    <li><a href="#">Wookpanna</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Kastrull</a></li>
-    <li><a href="#">Mixer</a></li>
-    <li><a href="#">Stekpanna</a></li>
-    <li><a href="#">Wookpanna</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Kastrull</a></li>
-    <li><a href="#">Mixer</a></li>
-    <li><a href="#">Stekpanna</a></li>
-    <li><a href="#">Wookpanna</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
-    <li><a href="#">Kastrull</a></li>
-    <li><a href="#">Mixer</a></li>
-    <li><a href="#">Stekpanna</a></li>
-    <li><a href="#">Wookpanna</a></li>
-    <li><a href="#">Vinglas i kristall</a></li>
   </ul>
   <ul id="list-sell" class="fynd-list <?php echo $sellClassHide; ?>">
     <?php getFyndList(true); ?>     

@@ -33,6 +33,7 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-list li{margin-left: 10px;}
 
 .fynd-list-head-text{color:#fff;font-size: 15px; width:200px;display: inline;}
+.fynd-list-head-text a{color:#fff;font-size: 15px; font-weight: bold;}
 .fynd-list-head-title{color:#fff;font-size: 15px; width:300px;display: inline;}
 
 .fynd-img{border:1px solid #E4E4E4;width:608px;text-align: center;}

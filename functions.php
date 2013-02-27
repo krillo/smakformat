@@ -72,6 +72,12 @@ function footer_container_start() {
 }
 ?>
 <?php
+
+
+
+
+
+
 register_sidebar(array(
     'name' => __('Puff fyndhyllan'),
     'id' => 'puff-fyndhyllan',
@@ -147,7 +153,7 @@ add_action('init', 'create_fyndhyllan');
 /**
  *  Add a new taxonomy for post type  "Fyndhyllan" make it hierarchical (like categories)
  */
-function create_fynd_taxonomie() {
+function create_fynd_taxonomy() {
   $labels = array(
       'name' => _x('Fyndkategori', 'taxonomy general name'),
       'singular_name' => _x('Fyndkategori', 'taxonomy singular name'),
@@ -166,17 +172,21 @@ function create_fynd_taxonomie() {
       'hierarchical' => true,
       'labels' => $labels,
       'show_ui' => true,
+      'show_tagcloud' => true,
       'show_admin_column' => true,
       'query_var' => true,
-      'rewrite' => array('slug' => 'fyndkategorier')
+      'rewrite' => array('slug' => 'fyndkategorier'),
+      'capabilities' => array(
+          'manage_terms' => 'manage_options', //by default only admin
+          'edit_terms' => 'manage_options',
+          'delete_terms' => 'manage_options',
+          'assign_terms' => 'edit_posts'  // means administrator', 'editor', 'author', 'contributor'
+      )
   );
   register_taxonomy('fyndkategori', array('fynd'), $args);
 }
 
-add_action('init', 'create_fynd_taxonomie', 0);
-
-
-
+add_action('init', 'create_fynd_taxonomy', 0);
 
 /**
  * Get a list of fynd objects
@@ -187,30 +197,117 @@ function getFyndList($sell = true) {
   if (!$sell) {
     $arg = 'kop';
   }
-  $fyndQuery = new WP_Query(array('post_type' => array('fynd'),'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $arg))));
+  $fyndQuery = new WP_Query(array('post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $arg))));
 
   while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
-    echo '<li><a href="' . get_permalink() . '?fyndtype=' . $arg . '">' .get_the_title() .'</a></li>';
+    echo '<li><a href="' . get_permalink() . '?fyndtype=' . $arg . '">' . get_the_title() . '</a></li>';
   endwhile;
   wp_reset_query();
 }
 
+
 /**
- * add debug info if on localhost
+ * Creates a dropdown of fynd-articles by fyndtype and sell or by. It also selects the showing article 
+ * 
+ * @param type $selectedId
+ * @param type $fyndtype
+ * @return string 
  */
-function mu_debug_info() {
-  if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
-    echo '<!-- Server Debug Info from mu-debug-info plugin.';
-    echo "\n\$_SERVER: ";
-    var_dump($_SERVER);
-    echo "\n\$_GET: ";
-    var_dump($_GET);
-    echo "\n\$_POST: ";
-    var_dump($_POST);
-    echo "\n\$_SESSION: ";
-    var_dump($_SESSION);
-    echo ' -->', "\n";
+function getFyndDropdown($selectedId, $fyndtype){
+  $fyndQuery = new WP_Query(array('post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndtype))));
+  $output = '<select class="" id="fynd-drop" name="fynd-drop">';
+  while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
+    if($selectedId == get_the_ID()){
+      $sel = ' selected="selected" ';
+    } else {
+      $sel = '';
+    }
+    $output .= '<option value="' . get_permalink() . '"  '.$sel.'>' . get_the_title() . '</option>';
+  endwhile;
+  $output .= '</select>';
+  wp_reset_query();
+  return $output;
+}
+
+
+
+//createFyndObject();
+function createFyndObject() {
+
+
+  $fynd_post = array(
+      'post_title' => "3 Coca-cola flaska",
+      'post_content' => "Tjoho säljer en Coca-cola flaska",
+      'post_status' => 'publish',
+      'post_author' => 1,
+      //'post_category' => array( 10,14 ),
+      'post_type' => 'fynd',
+          //'tax_input' => array('fyndkategori' => array('kop')),
+  );
+
+  $post_id = wp_insert_post($fynd_post, true);
+  //print_r($post_id);
+//wp_set_post_terms( $post_id, array( '14', '10' ), 'fyndkategorier', $append );
+
+  if ($post_id) {
+    $success = wp_set_object_terms($post_id, array('kop', 'glas'), 'fyndkategori', true);
+    print_r($success);
+
+    //wp_set_post_terms( $post_id, array( 'kop', 'glas' ), 'fyndkategori' );
+    //wp_set_post_terms( $post_id, array( 17 ), 'fyndkategori' );
+
+    add_post_meta($post_id, 'name', 'Kaptenen', true);
+    add_post_meta($post_id, '_name', 'field_1', true);
+    add_post_meta($post_id, 'email', 'Krillo@gmail.com', true);
+    add_post_meta($post_id, '_email', 'field_2', true);
+    add_post_meta($post_id, 'phone', '0701-11111', true);
+    add_post_meta($post_id, '_phone', 'field_3', true);
+    add_post_meta($post_id, 'price', '200', true);
+    add_post_meta($post_id, '_price', 'field_7', true);
   }
 }
 
-add_action('wp_head', 'mu_debug_info');
+add_action('wp_ajax_get_pers_info', 'add_fynd_obj_callback');
+add_action('wp_ajax_nopriv_get_pers_info', 'add_fynd_obj_callback');
+
+function add_fynd_obj_callback() {
+
+  $fynd_post = array(
+      'post_title' => "Ajax Coca-cola flaska",
+      'post_content' => "Tjoho säljer en Coca-cola flaska",
+      'post_status' => 'publish',
+      'post_author' => 1,
+      //'post_category' => array( 10,14 ),
+      'post_type' => 'fynd',
+          //'tax_input' => array('fyndkategori' => array('kop')),
+  );
+
+  $post_id = wp_insert_post($fynd_post, true);
+
+  if ($post_id) {
+    $success = wp_set_object_terms($post_id, array('kop', 'glas'), 'fyndkategori', true);
+
+    add_post_meta($post_id, 'name', 'Kaptenen', true);
+    add_post_meta($post_id, '_name', 'field_1', true);
+    add_post_meta($post_id, 'email', 'Krillo@gmail.com', true);
+    add_post_meta($post_id, '_email', 'field_2', true);
+    add_post_meta($post_id, 'phone', '0701-11111', true);
+    add_post_meta($post_id, '_phone', 'field_3', true);
+    add_post_meta($post_id, 'price', '200', true);
+    add_post_meta($post_id, '_price', 'field_7', true);
+  }
+
+  $response = array(
+      'success' => 0,
+      'error' => 'Inget personnummer',
+  );
+
+  $response = json_encode($response);
+  header('Cache-Control: no-cache, must-revalidate');
+  header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+  header('Content-type: application/json');
+  echo $response;
+  die(); // this is required to return a proper result
+}
+
+include_once 'reptilo_utils.php';

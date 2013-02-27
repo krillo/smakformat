@@ -13,6 +13,15 @@ get_header();
 global $woo_options;
 
 
+/*
+$output = shell_exec('git help');
+echo "<pre>$output</pre>";
+*/
+
+
+createFyndObject();
+!empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
+
 ?>
 
 <!-- #content Starts -->
@@ -26,7 +35,7 @@ global $woo_options;
       <!--div><h1>Välkommen till "bra att ha lådan"</h1></div-->
       
       
-      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text">Fyndhyllan, just nu visas: </div><div class="fynd-list-head-title"><?php the_title(); ?></div></div>
+      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype);?></div></div>
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
         <?php
