@@ -44,10 +44,11 @@ get_header();
 
 
 
-    <div id="overlay">
+    <div class="overlay hidden">
       <div id="fynd_pop">
         <h2>Lägg in en annons:</h2>
         <form action="#" id="fynd_form" mothod="post">
+          <input name="type" id="type" type="hidden"/>
           <ul>
             <fieldset class="annons-form">
               <li>
@@ -55,27 +56,31 @@ get_header();
                 <input name="name" id="name" value="" type="text" />
               </li>
               <li>
-                <label for="mobile">Mobiltelefon <span class="mandatory">*</span></label>
+                <label for="mobile">Mobil <span class="mandatory">*</span></label>
                 <input name="mobile" id="mobile" value="" type="text" class="tel"/>
               </li>		
               <li>
                 <label for="email">E-post <span class="mandatory">*</span></label>
                 <input name="email" id="email" value="" type="text"/>
               </li>
-              <li>
+              <!--li>
                 <label for="category">Kategori</label>
                 <input name="category" id="category" value="" type=""/>
-              </li>
+              </li-->
               <li>
                 <label for="rubrik">Rubrik <span class="mandatory">*</span></label>
                 <input name="rubrik" id="rubrik" value="" type="text"/>
               </li>
               <li>
                 <label for="content">Annonstext <span class="mandatory">*</span></label>
-                <input name="content" id="content" value="" type="textfield"/>
+                <textarea  name="content" id="annons-txt" ></textarea>
+              </li>
+              <li>
+                <label for="price">Pris kr</label>
+                <input name="price" id="price" value="" type=""/>
               </li>
               <li>          
-                <label for="terms">Ja jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
+                <label for="terms" id="terms-label">Ja jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
                 <input name="terms" id="terms" type="checkbox" style="float:left;" value ="Ja"/>
               </li>
             </fieldset>
@@ -86,14 +91,9 @@ get_header();
     </div>
 
     <style>
-      #fynd_pop{padding:10px 20px;width:280px;height:380px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;}
-      #fynd_pop h2{float:left;}
-      #fynd_form{color:#fff;background-color: blue;width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
-      #fynd_form INPUT{background-color: lightblue;}
-      
-      
-      #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
-      #overlay{}
+
+
+
     </style>    
 
 
@@ -148,44 +148,72 @@ get_header();
             },
             terms: ""
           },
-          //success: function() {
-          //  addFynd(event);
-          //},
           errorPlacement: function (error, element) {
             error.insertBefore(element);
-          }         
+          }, 
+          submitHandler: function() { 
+            //event.preventDefault(); 
+            addFynd();
+          }
         });
         
-    
+ 
         /**
          * Ajax call to add the "fynd"
          */
-        function addFynd(event){
-          event.preventDefault();
-          $("#zip-button-button").show();            
+        function addFynd(event){    
           var data = {
             action : 'add_fynd',
             name: $("#name").val(),
             mobile: $("#mobile").val(),
             email: $("#email").val(),
-            title: $("#title").val(),
-            content: $("#content").val(),
-            terms: $("#terms").val()
+            title: $("#rubrik").val(),
+            content: $("#annons-txt").val(),
+            terms: $("#terms").val(),
+            price: $("#price").val(),
+            type: $("#type").val()
           };
           $.post('/wp-admin/admin-ajax.php', data, function(response) {
             if(response.success == 1){
-              $("#zip-ok").removeClass("hidden");
-              $("#zip-ok span").html(response.city);
-              $("#ss-container").removeClass("hidden");
-              $("#zip-nok").addClass("hidden");
+              $(".overlay").hide();
+              alert("ok");
+              window.location.href = "http://smakformat.dev/?p=" + response.post_id + "&fyndtype=" + response.annons_type;
             }else{
-              $("#zip-nok").removeClass("hidden");
-              $("#zip-ok").addClass("hidden");
-              $("#ss-container").addClass("hidden");
+              $(".overlay").hide();              
+              alert("NOK");
             }        
           });  
         }
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        function hideAllOverlays(){
+          $('#terms-overlay').hide('slow');
+          $('#rut-info-overlay').hide('slow');
+          $('#price-overlay').hide('slow');
+        }    
+    
+    
+        $("#sell-button").click(function(event) {
+          event.preventDefault();
+          $("#type").val("salj");
+          $(".overlay").show();
+        });     
+        
+        $("#buy-button").click(function(event) {
+          event.preventDefault();
+          $("#type").val("kop");          
+          $(".overlay").show();
+        });     
+    
+    
+ 
 
         /**
          * if enter is pressed in hte #ss input box, do the persInfo lookup

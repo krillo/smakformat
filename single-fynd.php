@@ -14,14 +14,13 @@ global $woo_options;
 
 
 /*
-$output = shell_exec('git help');
-echo "<pre>$output</pre>";
-*/
+  $output = shell_exec('git help');
+  echo "<pre>$output</pre>";
+ */
 
 
-createFyndObject();
+//createFyndObject();
 !empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
-
 ?>
 
 <!-- #content Starts -->
@@ -33,44 +32,64 @@ createFyndObject();
     <?php woo_main_before(); ?>
     <div id="main">                       
       <!--div><h1>Välkommen till "bra att ha lådan"</h1></div-->
+
+
+
+
+
+      <script type="text/javascript">
+        jQuery(document).ready(function($){   
+    
+
+          $('#fynd-drop').change(function() {
+            var url;
+            var fyndtype;
+            url =  $('#fynd-drop').val();
+            fyndtype =  $('#fyndtype').val();
+            window.location.href = url + "?fyndtype=" + fyndtype;        
+          });
+
+        });
+      </script>
+
+
       
-      
-      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype);?></div></div>
+      <input id="fyndtype" value="<?php echo $fyndtype; ?>"  name="fyndtype" type="hidden" />
+      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
-        <?php
-        if (has_post_thumbnail()) {
-          the_post_thumbnail();
-        }
-        ?> 
+          <?php
+          if (has_post_thumbnail()) {
+            the_post_thumbnail();
+          }
+          ?> 
         </div>
         <h2 class="fynd-title"><?php the_title(); ?></h2>
         <div class="fynd-text">	
-            <?php the_content(); ?>
+          <?php the_content(); ?>
         </div>
         <div class="fynd-contact">	
           <ul>
-            <li>Pris: 100 kr</li>
-            <li>Kontakt</li>
-            <li>Namn: Krillo Dillo</li>
-            <li>Tel: 0761-393855</li>
-            <li>Email: krillo@gmail.com</li>
+            <li>Pris: <?php the_field("price"); ?> kr</li>
+            <li>Namn: <?php the_field("name"); ?></li>
+            <li>Tel: <?php the_field("phone"); ?></li>
+            <li>Email: <?php the_field("email"); ?></li>
           </ul>
         </div>
       </div><!--/#post-->
-    <?php woo_loop_after(); ?>     
+      <?php woo_loop_after(); ?>     
     </div><!-- /#main -->
     <?php woo_main_after(); ?>
 
     <div id="sidebar">
-            <?php include_once 'snippet_list_fynd.php'; ?>
+      <?php include_once 'snippet_list_fynd.php'; ?>
       <?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar("fyndhyllan")) : endif; ?>    
     </div>
 
 
   </div><!-- /#main-sidebar-container -->         
 
-<?php get_sidebar('alt'); ?>
+  <?php get_sidebar('alt'); ?>
 
 </div><!-- /#content -->
 <?php woo_content_after(); ?>

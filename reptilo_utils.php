@@ -82,8 +82,11 @@ add_action('wp_head', 'rep_debug_info');
  */
 function rep_scripts() {
   wp_enqueue_script("jquery");
-  wp_register_script('validate', 'http://jzaefferer.github.com/jquery-validation/jquery.validate.js');
+  //wp_register_script('validate', 'http://jzaefferer.github.com/jquery-validation/jquery.validate.js');
+  wp_register_script('validate', get_bloginfo('stylesheet_directory') . '/js/jquery.validate.js');
   wp_enqueue_script('validate');
+  
+  
 }
 
 add_action('wp_enqueue_scripts', 'rep_scripts');

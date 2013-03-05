@@ -41,3 +41,33 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-title{margin:20px 0 0 20px;}
 .fynd-text{float:left;width:280px;margin: 20px;}
 .fynd-contact{float:left;width:220px;margin: 20px 20px 20px 40px;}
+
+
+      #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
+      #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
+      #fynd_pop h2{float:left;}
+      #fynd_form{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
+      #fynd_form INPUT{color:#0C5D83;background-color: #E8F2F8;}
+      #fynd_form label{display: inline-block;width: 80px;}
+      #annons-txt{color:#0C5D83;width:233px; height: 80px;background-color: #E8F2F8;border-radius: 5px 5px;}
+      #fynd_form label#terms-label{width:232px;}
+
+      
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    /*
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-top:-150px; /* negative half the size of height * /
+    margin-left:-150px; /* negative half the size of width * /
+    */
+}
+     
