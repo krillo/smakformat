@@ -161,7 +161,8 @@ get_header();
         /**
          * Ajax call to add the "fynd"
          */
-        function addFynd(event){    
+        function addFynd(event){ 
+          var url = "<?php echo site_url(); ?>";
           var data = {
             action : 'add_fynd',
             name: $("#name").val(),
@@ -177,7 +178,7 @@ get_header();
             if(response.success == 1){
               $(".overlay").hide();
               alert("ok");
-              window.location.href = "http://smakformat.dev/?p=" + response.post_id + "&fyndtype=" + response.annons_type;
+              window.location.href = url + "/?p=" + response.post_id + "&fyndtype=" + response.annons_type;
             }else{
               $(".overlay").hide();              
               alert("NOK");
