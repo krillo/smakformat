@@ -76,6 +76,10 @@ get_header();
                 <textarea  name="content" id="annons-txt" ></textarea>
               </li>
               <li>
+                <label for="price">Lagg till bild</label>
+                <a onclick="return false;" title="Upload image" class="thickbox" id="add_image" href="<?php echo site_url(); ?>/wp-admin/media-upload.php?type=image&amp;TB_iframe=true&amp;width=640&amp;hei‌​ght=105">Lagg till bild</a>
+              </li>
+              <li>
                 <label for="price">Pris kr</label>
                 <input name="price" id="price" value="" type=""/>
               </li>
@@ -87,13 +91,87 @@ get_header();
           </ul>        
           <input name="skicka" id="skicka" type="submit" style="float:right;" value ="Skicka"/>
         </form>
+
+
+
+
+
+  <script type="text/javascript">
+    $(function() {
+        $('#file1').change(function() {
+            $(this).upload('/action/jquery_upload.php', function(res) {
+                $(res).insertAfter(this);
+            }, 'html');
+        });
+    });
+  </script>
+
+  <input type="file" name="file" id="file1">
+
+
+
+        <?php
+        // define a constant for the maximum upload size
+        define('MAX_FILE_SIZE', 1024 * 50);
+
+        if (array_key_exists('upload', $_POST)) {
+          define('UPLOAD_DIR', 'wp-content/themes/smakformat/user_images/');
+          // replace any spaces in original filename with underscores
+          $file = str_replace(' ', '_', $_FILES['image']['name']);
+          $permitted = array('image/gif', 'image/jpeg', 'image/jpg','image/png');
+
+          // upload if file is OK
+          if (in_array($_FILES['image']['type'], $permitted)
+                  && $_FILES['image']['size'] > 0
+                  && $_FILES['image']['size'] <= MAX_FILE_SIZE) {
+            switch ($_FILES['image']['error']) {
+              case 0:
+                // check if a file of the same name has been uploaded
+                if (!file_exists(UPLOAD_DIR . $file)) {
+                  // move the file to the upload folder and rename it
+                  $success = move_uploaded_file($_FILES['image']['tmp_name'], UPLOAD_DIR . $file);
+                } else {
+                  $result = 'En bild med samma namn finns redan. Byt namn.';
+                }
+                if ($success) {
+                  $result = "$file uploaded successfully.";
+                } else {
+                  $result = "Error uploading $file. Please try again.";
+                }
+                break;
+              case 3:
+              case 6:
+              case 7:
+              case 8:
+                $result = "Error uploading $file. Please try again.";
+                break;
+              case 4:
+                $result = "You didn't select a file to be uploaded.";
+            }
+          } else {
+            $result = "$file is either too big or not an image.";
+          }
+        }
+        ?>       
+
+        <form action="" method="post" enctype="multipart/form-data" name="uploadImage" id="uploadImage">
+          <p>
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_FILE_SIZE; ?>" />
+            <label for="image">Upload image:</label>
+            <input type="file_x" name="image" id="image" />
+          </p>
+          <p>
+            <input type="submit" name="upload" id="upload" value="Upload" />
+          </p>
+        </form>
+
+
+
+
       </div>    
     </div>
 
     <style>
-
-
-
     </style>    
 
 

@@ -6,12 +6,21 @@ Author: Kristian Erendi
 Author URI: http://reptilo.se
 Template: canvas
 */
- 
+
 @import url("../canvas/style.css");
 
 .clear{clear: both;}
 .hidden{display:none;}
 .margin{margin-bottom:20px;}
+
+
+
+#header-container #header {padding-top: 10px;height:142px;}
+#header #logo {padding-top: 40px;}
+
+
+
+
 
 li.widget.widget_text {list-style: none outside none;}
 #tabs ul.wooTabs li a {padding: 5px 4px 3px;}
@@ -43,31 +52,55 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-contact{float:left;width:220px;margin: 20px 20px 20px 40px;}
 
 
-      #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
-      #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
-      #fynd_pop h2{float:left;}
-      #fynd_form{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
-      #fynd_form INPUT{color:#0C5D83;background-color: #E8F2F8;}
-      #fynd_form label{display: inline-block;width: 80px;}
-      #annons-txt{color:#0C5D83;width:233px; height: 80px;background-color: #E8F2F8;border-radius: 5px 5px;}
-      #fynd_form label#terms-label{width:232px;}
+#fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
+#fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
+#fynd_pop h2{float:left;}
+#fynd_form{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
+#fynd_form INPUT{color:#0C5D83;background-color: #E8F2F8;}
+#fynd_form label{display: inline-block;width: 80px;}
+#annons-txt{color:#0C5D83;width:233px; height: 80px;background-color: #E8F2F8;border-radius: 5px 5px;}
+#fynd_form label#terms-label{width:232px;}
 
-      
+
 
 .overlay {
-    background-color: rgba(0, 0, 0, 0.8);
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    /*
-    position:fixed;
-    top:50%;
-    left:50%;
-    margin-top:-150px; /* negative half the size of height * /
-    margin-left:-150px; /* negative half the size of width * /
-    */
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  /*
+  position:fixed;
+  top:50%;
+  left:50%;
+  margin-top:-150px; /* negative half the size of height * /
+  margin-left:-150px; /* negative half the size of width * /
+  */
 }
-     
+
+
+
+
+#head-img{float:right;height: 100px;width: 300px;}
+#head-slogan {background-image: url("images/vi_kryddar.png");background-position: 0 24px;background-repeat: no-repeat;float: right;height: 160px;width: 160px;}  
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+
+}
+
+
+
+
+
+/* Maximum width */
+@media screen and (max-width: 910px) {
+  body {
+    background: #ffe11a;
+  }
+}
