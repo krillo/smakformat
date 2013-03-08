@@ -19,8 +19,20 @@ global $woo_options;
  */
 
 
-//createFyndObject();
+
 !empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
+switch ($fyndtype) {
+  case 'kop':
+    $fyndtype_txt = 'Köpes';
+    break;
+  case 'salj':
+    $fyndtype_txt = 'Säljes';
+    break;
+  default:
+    $fyndtype_txt = '';
+    break;
+}
+
 ?>
 
 <!-- #content Starts -->
@@ -30,8 +42,8 @@ global $woo_options;
   <div id="main-sidebar-container">    
 
     <?php woo_main_before(); ?>
-    <div id="main">                       
-      <!--div><h1>Välkommen till "bra att ha lådan"</h1></div-->
+    <div id="main" class="">                       
+     
 
 
 
@@ -55,7 +67,7 @@ global $woo_options;
 
       
       <input id="fyndtype" value="<?php echo $fyndtype; ?>"  name="fyndtype" type="hidden" />
-      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
+      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas <?php echo $fyndtype_txt?>: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
           <?php
@@ -70,15 +82,31 @@ global $woo_options;
         </div>
         <div class="fynd-contact">	
           <ul>
-            <li>Pris: <?php the_field("price"); ?> kr</li>
+            <li><strong>Pris: <?php the_field("price"); ?> kr</strong></li>
             <li>Namn: <?php the_field("name"); ?></li>
-            <li>Tel: <?php the_field("phone"); ?></li>
-            <li>Email: <?php the_field("email"); ?></li>
+            <li>Tel: <a href="tel:+46<?php the_field("phone"); ?>"><?php the_field("phone"); ?></a></li>
+            <li>Email: <a href="mailto:<?php the_field("email"); ?>"><?php the_field("email"); ?></a></li>
           </ul>
         </div>
       </div><!--/#post-->
+      <?php if(function_exists('kc_add_social_share')) kc_add_social_share(); ?>
+      
+      <div id="fynd-puff">
+        <h3>Mer  på fyndhyllan</h3>
+        <img src="" width="60" height="60" />
+        <ul>
+          <li><?php the_post_thumbnail(); ?></li>
+          <li><?php the_post_thumbnail(); ?></li>
+          <li><?php the_post_thumbnail(); ?></li>
+        </ul>
+        
+      </div>
+      
       <?php woo_loop_after(); ?>     
     </div><!-- /#main -->
+    
+    
+    
     <?php woo_main_after(); ?>
 
     <div id="sidebar">

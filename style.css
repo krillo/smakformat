@@ -45,12 +45,18 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-list-head-text a{color:#fff;font-size: 15px; font-weight: bold;}
 .fynd-list-head-title{color:#fff;font-size: 15px; width:300px;display: inline;}
 
+
+.fynd-content{border-bottom: 2px solid #ddd;}
 .fynd-img{border:1px solid #E4E4E4;width:608px;text-align: center;}
 .fynd-img image{  }
 .fynd-title{margin:20px 0 0 20px;}
 .fynd-text{float:left;width:280px;margin: 20px;}
 .fynd-contact{float:left;width:220px;margin: 20px 20px 20px 40px;}
 
+#fynd-puff{overflow:hidden;padding-top: 10px;border-top:2px solid #ddd;margin-top:20px;}
+#fynd-puff ul{list-style:  none; }
+#fynd-puff li{display: inline;margin-right: 30px;}
+#fynd-puff img{width:170px; height:170px;}
 
 #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
 #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
