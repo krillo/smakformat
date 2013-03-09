@@ -17,9 +17,6 @@ global $woo_options;
   $output = shell_exec('git help');
   echo "<pre>$output</pre>";
  */
-
-
-
 !empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
 switch ($fyndtype) {
   case 'kop':
@@ -32,7 +29,6 @@ switch ($fyndtype) {
     $fyndtype_txt = '';
     break;
 }
-
 ?>
 
 <!-- #content Starts -->
@@ -43,7 +39,7 @@ switch ($fyndtype) {
 
     <?php woo_main_before(); ?>
     <div id="main" class="">                       
-     
+
 
 
 
@@ -65,9 +61,9 @@ switch ($fyndtype) {
       </script>
 
 
-      
+
       <input id="fyndtype" value="<?php echo $fyndtype; ?>"  name="fyndtype" type="hidden" />
-      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas <?php echo $fyndtype_txt?>: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
+      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas <?php echo $fyndtype_txt ?>: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
           <?php
@@ -89,24 +85,13 @@ switch ($fyndtype) {
           </ul>
         </div>
       </div><!--/#post-->
-      <?php if(function_exists('kc_add_social_share')) kc_add_social_share(); ?>
-      
-      <div id="fynd-puff">
-        <h3>Mer  på fyndhyllan</h3>
-        <img src="" width="60" height="60" />
-        <ul>
-          <li><?php the_post_thumbnail(); ?></li>
-          <li><?php the_post_thumbnail(); ?></li>
-          <li><?php the_post_thumbnail(); ?></li>
-        </ul>
-        
-      </div>
-      
+      <?php if (function_exists('kc_add_social_share')) kc_add_social_share(); ?>
+      <?php include 'snippet_fynd_puffs.php'; ?>    
       <?php woo_loop_after(); ?>     
     </div><!-- /#main -->
-    
-    
-    
+
+
+
     <?php woo_main_after(); ?>
 
     <div id="sidebar">

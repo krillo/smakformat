@@ -55,8 +55,12 @@ li.widget.widget_text {list-style: none outside none;}
 
 #fynd-puff{overflow:hidden;padding-top: 10px;border-top:2px solid #ddd;margin-top:20px;}
 #fynd-puff ul{list-style:  none; }
-#fynd-puff li{display: inline;margin-right: 30px;}
+#fynd-puff ul a{overflow: hidden;float:left;}
+#fynd-puff a li{display: inline;margin-right: 30px;}
 #fynd-puff img{width:170px; height:170px;}
+.fynd-puff-heading{width:170px;}
+
+
 
 #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
 #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}

@@ -182,6 +182,9 @@ function create_fynd_taxonomy() {
 
 add_action('init', 'create_fynd_taxonomy', 0);
 
+
+
+
 /**
  * Get a list of fynd objects
  * @param type $sell 
@@ -198,6 +201,49 @@ function getFyndList($sell = true) {
   endwhile;
   wp_reset_query();
 }
+
+
+
+
+/**
+ * Return an array of fynd. 
+ * All types and order by date
+ * All fyndcategories ara there and also fynd_type
+ * 
+ * @param type $nbr 
+ */
+function getFyndArray($nbr = 3) {
+  $fyndQuery = new WP_Query(array('orderby' => 'date', 'order' => 'DESC', 'posts_per_page' => $nbr, 'post_type' => array('fynd')));
+  $fynds = $fyndQuery->posts;
+  foreach ($fynds as $fynd) {
+    //get_the_post_thumbnail( $post_id, $size, $attr );
+    $fynd->fyndkategori = get_the_terms( $post->ID, 'fyndkategori' );
+    foreach ($fynd->fyndkategori as $category) {
+      switch ($category->slug) {
+        case 'kop':
+          $fynd->fynd_type = 'kop';
+          $fynd->fynd_type_name = 'köpes';
+          break;
+        case 'salj':
+          $fynd->fynd_type = 'salj';
+          $fynd->fynd_type_name = 'säljes';
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  wp_reset_query(); 
+  //print_r($fynds);
+  return $fynds;  
+}
+
+
+
+
+
+
+
 
 /**
  * Creates a dropdown of fynd-articles by fyndtype and sell or by. It also selects the showing article 
@@ -222,7 +268,10 @@ function getFyndDropdown($selectedId, $fyndtype) {
   return $output;
 }
 
+
+
 //createFyndObject();
+
 function createFyndObject() {
 
 
