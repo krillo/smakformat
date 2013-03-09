@@ -28,6 +28,7 @@ get_header();
                 <div class="clear"></div>
                 <div id="chef-buttons"><input type="button" id="sell-button" value="Jag vill sälja" class="chef-button" /><input type="button" id="buy-button" value="Jag vill köpa" class="chef-button" /></div>
               </div>
+              <?php include 'snippet_fynd_puffs.php'; ?>    
             </div><!-- /.entry -->
           </div><!-- /.post -->
           <?php

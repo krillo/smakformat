@@ -182,9 +182,6 @@ function create_fynd_taxonomy() {
 
 add_action('init', 'create_fynd_taxonomy', 0);
 
-
-
-
 /**
  * Get a list of fynd objects
  * @param type $sell 
@@ -202,9 +199,6 @@ function getFyndList($sell = true) {
   wp_reset_query();
 }
 
-
-
-
 /**
  * Return an array of fynd. 
  * All types and order by date
@@ -212,12 +206,13 @@ function getFyndList($sell = true) {
  * 
  * @param type $nbr 
  */
-function getFyndArray($nbr = 3) {
-  $fyndQuery = new WP_Query(array('orderby' => 'date', 'order' => 'DESC', 'posts_per_page' => $nbr, 'post_type' => array('fynd')));
+function getFyndArray($nbr = 3, $exclude_id = 0) {
+  $fyndQuery = new WP_Query(array('orderby' => 'rand', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd')));
   $fynds = $fyndQuery->posts;
+  $fyndArray = array();
   foreach ($fynds as $fynd) {
     //get_the_post_thumbnail( $post_id, $size, $attr );
-    $fynd->fyndkategori = get_the_terms( $post->ID, 'fyndkategori' );
+    $fynd->fyndkategori = get_the_terms($post->ID, 'fyndkategori');
     foreach ($fynd->fyndkategori as $category) {
       switch ($category->slug) {
         case 'kop':
@@ -232,18 +227,17 @@ function getFyndArray($nbr = 3) {
           break;
       }
     }
+    if ($fynd->ID != $exclude_id) {
+      $fyndArray[] = $fynd;
+    }
+    if(count($fyndArray) == $nbr){
+      break;
+    }
   }
-  wp_reset_query(); 
-  //print_r($fynds);
-  return $fynds;  
+  wp_reset_query();
+  //print_r($fyndArray);
+  return $fyndArray;
 }
-
-
-
-
-
-
-
 
 /**
  * Creates a dropdown of fynd-articles by fyndtype and sell or by. It also selects the showing article 
@@ -267,8 +261,6 @@ function getFyndDropdown($selectedId, $fyndtype) {
   wp_reset_query();
   return $output;
 }
-
-
 
 //createFyndObject();
 
@@ -328,9 +320,9 @@ function add_fynd_obj_callback() {
   $response = array(
       'success' => 0,
       'error' => 'xxx',
-      'annons_type' => $order->type      
-  );  
-  
+      'annons_type' => $order->type
+  );
+
   if ($order->type == 'kop' || $order->type == 'salj') {
     $fynd_post = array(
         'post_title' => $order->title,
@@ -359,10 +351,10 @@ function add_fynd_obj_callback() {
       );
     }
   } else {
-     $response['error'] = 'Wrong category! No buy or sell.';
-     $response['annons_type'] = $order->type;
-  } 
-  
+    $response['error'] = 'Wrong category! No buy or sell.';
+    $response['annons_type'] = $order->type;
+  }
+
 
   $response = json_encode($response);
   header('Cache-Control: no-cache, must-revalidate');
