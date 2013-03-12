@@ -238,11 +238,10 @@ get_header();
           $.post('/wp-admin/admin-ajax.php', data, function(response) {
             if(response.success == 1){
               $(".overlay").hide();
-              alert("ok");
               window.location.href = url + "/?p=" + response.post_id + "&fyndtype=" + response.annons_type;
             }else{
               $(".overlay").hide();              
-              alert("NOK");
+              alert("Något har gått fel, var vänlig prova igen.");
             }        
           });  
         }
