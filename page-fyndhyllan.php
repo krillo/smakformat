@@ -29,6 +29,8 @@ get_header();
                 <div id="chef-buttons"><input type="button" id="sell-button" value="Jag vill sälja" class="chef-button" /><input type="button" id="buy-button" value="Jag vill köpa" class="chef-button" /></div>
               </div>              
               <?php include 'snippet_fynd_puffs.php'; ?>    
+              <?php getFyndCategoriesDropdown(); ?>
+
             </div><!-- /.entry -->
           </div><!-- /.post -->
           <?php
@@ -84,10 +86,10 @@ get_header();
                   <label for="email">E-post <span class="mandatory">*</span></label>
                   <input name="email" id="email" value="" type="text"/>
                 </li>
-                <!--li>
+                <li>
                   <label for="category">Kategori</label>
-                  <input name="category" id="category" value="" type=""/>
-                </li-->
+                  <?php echo getFyndCategoriesDropdown(); ?>
+                </li>
                 <li>
                   <label for="rubrik">Rubrik <span class="mandatory">*</span></label>
                   <input name="rubrik" id="rubrik" value="" type="text"/>
@@ -126,23 +128,7 @@ get_header();
         <script type="text/javascript">
           jQuery(document).ready(function($) 
           { 
-            $('#photoimg').live('change', function()	
-            { 
-              $("#preview").html('');
-              $("#preview").html('<img src="/wp-content/themes/smakformat/images/ajax_loader.gif" alt="Laddar upp..."/>');
-              $("#imageform").ajaxForm(
-              {
-                target: '#preview', 
-                success: function(response){
-                  if(response.success == 1){
-                    $("#preview").html(response.filename);
-                    $("#filename").val(response.filename);
-                  } else {
-                    $("#preview").html(response.error_txt);
-                  }
-                }
-              }).submit();
-            });
+
           }); 
         </script>
 
@@ -174,6 +160,7 @@ get_header();
               minlength: 6
             },
             email:{
+              email: true,
               required: true
             },
             rubrik:{
@@ -196,7 +183,8 @@ get_header();
               minlength: ""
             },
             email:{
-              required: ""
+              required: "",
+              email: ""
             },
             rubrik:{
               required: "",
@@ -206,10 +194,11 @@ get_header();
               required: "",
               minlength: ""
             },
-            terms: ""
+            terms: "*"
           },
           errorPlacement: function (error, element) {
             error.insertBefore(element);
+            //error.insertAfter(element);
           }, 
           submitHandler: function() { 
             //event.preventDefault(); 
@@ -233,7 +222,8 @@ get_header();
             terms: $("#terms").val(),
             price: $("#price").val(),
             type: $("#type").val(),
-            filename: $("#filename").val()
+            filename: $("#filename").val(),
+            category: $("#fynd-cat-drop").val()
           };
           $.post('/wp-admin/admin-ajax.php', data, function(response) {
             if(response.success == 1){
@@ -245,21 +235,7 @@ get_header();
             }        
           });  
         }
- 
- 
- 
- 
- 
- 
- 
- 
- 
-        function hideAllOverlays(){
-          $('#terms-overlay').hide('slow');
-          $('#rut-info-overlay').hide('slow');
-          $('#price-overlay').hide('slow');
-        }    
-    
+       
     
         $("#sell-button").click(function(event) {
           event.preventDefault();
@@ -272,67 +248,33 @@ get_header();
           $("#type").val("kop");          
           $(".overlay").show();
         });     
-    
-    
- 
+       
+ /*
+        $('.overlay').click(function(event) {
+          $('.overlay').hide('slow');
+        }); 
+ */
 
-        /**
-         * if enter is pressed in hte #ss input box, do the persInfo lookup
-         */ 
-        $('#ss').keypress(function (event) {
-          if (event.which == 13 && $(this).val().length >= 10 ) {
-            getPersInfo(event);
-          }
+        $('#photoimg').live('change', function()	
+        { 
+          $("#preview").html('');
+          $("#preview").html('<img src="/wp-content/themes/smakformat/images/ajax_loader.gif" alt="Laddar upp..."/>');
+          $("#imageform").ajaxForm(
+          {
+            target: '#preview', 
+            success: function(response){
+              if(response.success == 1){
+                //$("#preview").html(response.filename);
+                $("#filename").val(response.filename);
+              } else {
+                alert(response.error_txt);
+                //$("#preview").html(response.error_txt);
+              }
+            }
+          }).submit();
         });
 
 
-        /**
-         * Do the persInfo lookup
-         */        
-        $(".ss-button").click(function(event) {
-          event.preventDefault();
-          getPersInfo(event);
-        });        
-    
-
-        /**
-         * Ajax call to get peronal info
-         */        
-        function getPersInfo(event){
-          event.preventDefault();
-          $("#ss-button-submit").hide();
-          $("#ss-button-button").show();
-                
-          $("#ss-progress").css("display", "block");    //show progress wheel
-          ss = $('#ss').val();
-          var data = {
-            action : 'get_pers_info',
-            ss: ss
-          };
-          $.post('/wp-admin/admin-ajax.php', data, function(response) {
-            $("#ss-progress").hide();  
-            if(response.success == 1){
-              $("#pers-container").removeClass("hidden");
-              $("#ss-error").addClass("hidden");
-              $("#firstname").val(response.fname);
-              $("#firstname_show").val(response.fname);
-              $("#lastname").val(response.lname);
-              $("#lastname_show").val(response.lname);
-              $("#street1").val(response.street1);
-              $("#street1_show").val(response.street1);
-              $("#street2").val(response.street2);
-              $("#zip").val(response.zip);
-              $("#zip_show").val(response.zip);
-              $("#city").val(response.city);
-              $("#city_show").val(response.city);
-              $("#phone").val(response.phone);
-              $("#email").val(response.email);          
-            }else{
-              $("#ss-error").removeClass("hidden");
-              $("#pers-container").addClass("hidden");
-            }        
-          });
-        }
 
       });
     </script>

@@ -262,41 +262,23 @@ function getFyndDropdown($selectedId, $fyndtype) {
   return $output;
 }
 
-//createFyndObject();
+/**
+ * Returns an array of all categories for fynd
+ * "Köp" and "Sälj" are also categories, these are excluded
+ *  
+ */
+function getFyndCategoriesDropdown() {
+  $categories = get_terms('fyndkategori', array('orderby' => 'name', 'hide_empty' => 0));
 
-function createFyndObject() {
-
-
-  $fynd_post = array(
-      'post_title' => "Apa Coca-cola flaska",
-      'post_content' => "Tjoho säljer en Coca-cola flaska",
-      'post_status' => 'publish',
-      'post_author' => 1,
-      //'post_category' => array( 10,14 ),
-      'post_type' => 'fynd',
-          //'tax_input' => array('fyndkategori' => array('kop')),
-  );
-
-  $post_id = wp_insert_post($fynd_post, true);
-  //print_r($post_id);
-//wp_set_post_terms( $post_id, array( '14', '10' ), 'fyndkategorier', $append );
-
-  if ($post_id) {
-    $success = wp_set_object_terms($post_id, array('kop', 'glas'), 'fyndkategori', true);
-    print_r($success);
-
-    //wp_set_post_terms( $post_id, array( 'kop', 'glas' ), 'fyndkategori' );
-    //wp_set_post_terms( $post_id, array( 17 ), 'fyndkategori' );
-
-    add_post_meta($post_id, 'name', 'Kaptenen', true);
-    add_post_meta($post_id, '_name', 'field_1', true);
-    add_post_meta($post_id, 'email', 'Krillo@gmail.com', true);
-    add_post_meta($post_id, '_email', 'field_2', true);
-    add_post_meta($post_id, 'phone', '0701-11111', true);
-    add_post_meta($post_id, '_phone', 'field_3', true);
-    add_post_meta($post_id, 'price', '200', true);
-    add_post_meta($post_id, '_price', 'field_7', true);
+  $output = '<select class="" id="fynd-cat-drop" name="fynd-cat">';
+  foreach ($categories as $cat) {
+    if ($cat->slug != 'kop' && $cat->slug != 'salj') {
+      $output .= '<option value="' . $cat->slug . '">' . $cat->name . '</option>';
+    }
   }
+  $output .= '</select>';
+  return $output;
+
 }
 
 add_action('wp_ajax_add_fynd', 'add_fynd_obj_callback');
@@ -319,6 +301,7 @@ function add_fynd_obj_callback() {
   !empty($_REQUEST['terms']) ? $order->terms = $_REQUEST['terms'] : $order->terms = '';
   !empty($_REQUEST['type']) ? $order->type = $_REQUEST['type'] : $order->type = '';
   !empty($_REQUEST['filename']) ? $order->filename = $_REQUEST['filename'] : $order->filename = '';
+  !empty($_REQUEST['category']) ? $order->category = $_REQUEST['category'] : $order->category = '';
 
   $response = array(
       'success' => 0,
@@ -338,7 +321,7 @@ function add_fynd_obj_callback() {
 
     //add some meta fields
     if ($post_id) {
-      $success = wp_set_object_terms($post_id, array($order->type, 'glas'), 'fyndkategori', true);
+      $success = wp_set_object_terms($post_id, array($order->type, $order->category), 'fyndkategori', true);
       add_post_meta($post_id, 'name', $order->name, true);
       add_post_meta($post_id, '_name', 'field_1', true);
       add_post_meta($post_id, 'email', $order->email, true);
@@ -350,10 +333,9 @@ function add_fynd_obj_callback() {
 
       //add the image to the media library
       $order->filename;
-      $uploads = wp_upload_dir(date('Y/m'));
-      $file_with_path = $uploads['path'] . '/' . $order->filename;
-      $wp_filetype = wp_check_filetype(basename($file_with_path), null);
       $wp_upload_dir = wp_upload_dir(date('Y/m'));
+      $file_with_path = $wp_upload_dir['path'] . '/' . $order->filename;
+      $wp_filetype = wp_check_filetype(basename($file_with_path), null);
 
       $attachment = array(
           'guid' => $wp_upload_dir['url'] . '/' . basename($order->filename),
@@ -368,24 +350,22 @@ function add_fynd_obj_callback() {
       $attach_data = wp_generate_attachment_metadata($attach_id, $file_with_path);
       wp_update_attachment_metadata($attach_id, $attach_data);
 
-/*
-      echo '$wp_filetype';
-      print_r($wp_filetype);
-      echo '$wp_upload_dir';
-      print_r($wp_upload_dir);
-      echo '$attachment';
-      print_r($attachment);
-      echo '$attach_id ' . $attach_id;
-      echo '$attach_data';
-      print_r($attach_data);
-      die();
-*/
+      /*
+        echo '$wp_filetype';
+        print_r($wp_filetype);
+        echo '$wp_upload_dir';
+        print_r($wp_upload_dir);
+        echo '$attachment';
+        print_r($attachment);
+        echo '$attach_id ' . $attach_id;
+        echo '$attach_data';
+        print_r($attach_data);
+        die();
+       */
 
       //make the image featured image 
-      set_post_thumbnail($post_id, $attach_id );
-      
-      
-      
+      set_post_thumbnail($post_id, $attach_id);
+
       $response = array(
           'success' => 1,
           'post_id' => $post_id,
