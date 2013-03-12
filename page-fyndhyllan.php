@@ -27,7 +27,7 @@ get_header();
                 </div>
                 <div class="clear"></div>
                 <div id="chef-buttons"><input type="button" id="sell-button" value="Jag vill sälja" class="chef-button" /><input type="button" id="buy-button" value="Jag vill köpa" class="chef-button" /></div>
-              </div>
+              </div>              
               <?php include 'snippet_fynd_puffs.php'; ?>    
             </div><!-- /.entry -->
           </div><!-- /.post -->
@@ -48,123 +48,106 @@ get_header();
     <div class="overlay hidden">
       <div id="fynd_pop">
         <h2>Lägg in en annons:</h2>
-        <form action="#" id="fynd_form" mothod="post">
-          <input name="type" id="type" type="hidden"/>
-          <ul>
-            <fieldset class="annons-form">
+
+
+        <div id="fynd_form_content">
+
+          <form id="imageform" method="post" enctype="multipart/form-data" action='/wp-content/themes/smakformat/action/jquery_upload.php'>
+            <ul>
               <li>
-                <label for="name">Namn <span class="mandatory">*</span></label>
-                <input name="name" id="name" value="" type="text" />
+                <label for="price">Lägg till bild</label> <div id='preview'></div>
               </li>
               <li>
-                <label for="mobile">Mobil <span class="mandatory">*</span></label>
-                <input name="mobile" id="mobile" value="" type="text" class="tel"/>
-              </li>		
-              <li>
-                <label for="email">E-post <span class="mandatory">*</span></label>
-                <input name="email" id="email" value="" type="text"/>
+                <input type="file" name="photoimg" id="photoimg" />
               </li>
-              <!--li>
-                <label for="category">Kategori</label>
-                <input name="category" id="category" value="" type=""/>
-              </li-->
-              <li>
-                <label for="rubrik">Rubrik <span class="mandatory">*</span></label>
-                <input name="rubrik" id="rubrik" value="" type="text"/>
-              </li>
-              <li>
-                <label for="content">Annonstext <span class="mandatory">*</span></label>
-                <textarea  name="content" id="annons-txt" ></textarea>
-              </li>
-              <li>
-                <label for="price">Lagg till bild</label>
-                <a onclick="return false;" title="Upload image" class="thickbox" id="add_image" href="<?php echo site_url(); ?>/wp-admin/media-upload.php?type=image&amp;TB_iframe=true&amp;width=640&amp;hei‌​ght=105">Lagg till bild</a>
-              </li>
-              <li>
-                <label for="price">Pris kr</label>
-                <input name="price" id="price" value="" type=""/>
-              </li>
-              <li>          
-                <label for="terms" id="terms-label">Ja jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
-                <input name="terms" id="terms" type="checkbox" style="float:left;" value ="Ja"/>
-              </li>
-            </fieldset>
-          </ul>        
-          <input name="skicka" id="skicka" type="submit" style="float:right;" value ="Skicka"/>
-        </form>
+            </ul>
+          </form>
 
 
 
 
 
-  <script type="text/javascript">
-    $(function() {
-        $('#file1').change(function() {
-            $(this).upload('/action/jquery_upload.php', function(res) {
-                $(res).insertAfter(this);
-            }, 'html');
-        });
-    });
-  </script>
+          <form action="#" id="fynd_form" mothod="post">
+            <input name="type" id="type" type="hidden"/>
+            <input name="filename" id="filename" type="hidden"/>
+            <ul>
+              <fieldset class="annons-form">
+                <li>
+                  <label for="name">Namn <span class="mandatory">*</span></label>
+                  <input name="name" id="name" value="" type="text" />
+                </li>
+                <li>
+                  <label for="mobile">Mobil <span class="mandatory">*</span></label>
+                  <input name="mobile" id="mobile" value="" type="text" class="tel"/>
+                </li>		
+                <li>
+                  <label for="email">E-post <span class="mandatory">*</span></label>
+                  <input name="email" id="email" value="" type="text"/>
+                </li>
+                <!--li>
+                  <label for="category">Kategori</label>
+                  <input name="category" id="category" value="" type=""/>
+                </li-->
+                <li>
+                  <label for="rubrik">Rubrik <span class="mandatory">*</span></label>
+                  <input name="rubrik" id="rubrik" value="" type="text"/>
+                </li>
+                <li>
+                  <label for="content">Annonstext <span class="mandatory">*</span></label>
+                  <textarea  name="content" id="annons-txt" ></textarea>
+                </li>
 
-  <input type="file" name="file" id="file1">
+                <li>
+                  <label for="price">Pris kr</label>
+                  <input name="price" id="price" value="" type=""/>
+                </li>
+                <li>          
+                  <label for="terms" id="terms-label">Ja jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
+                  <input name="terms" id="terms" type="checkbox" style="float:left;" value ="Ja"/>
+                </li>
+              </fieldset>
+            </ul>        
+            <input name="skicka" id="skicka" type="submit" style="float:right;" value ="Skicka"/>
+          </form>
+
+        </div>
 
 
 
-        <?php
-        // define a constant for the maximum upload size
-        define('MAX_FILE_SIZE', 1024 * 50);
 
-        if (array_key_exists('upload', $_POST)) {
-          define('UPLOAD_DIR', 'wp-content/themes/smakformat/user_images/');
-          // replace any spaces in original filename with underscores
-          $file = str_replace(' ', '_', $_FILES['image']['name']);
-          $permitted = array('image/gif', 'image/jpeg', 'image/jpg','image/png');
 
-          // upload if file is OK
-          if (in_array($_FILES['image']['type'], $permitted)
-                  && $_FILES['image']['size'] > 0
-                  && $_FILES['image']['size'] <= MAX_FILE_SIZE) {
-            switch ($_FILES['image']['error']) {
-              case 0:
-                // check if a file of the same name has been uploaded
-                if (!file_exists(UPLOAD_DIR . $file)) {
-                  // move the file to the upload folder and rename it
-                  $success = move_uploaded_file($_FILES['image']['tmp_name'], UPLOAD_DIR . $file);
-                } else {
-                  $result = 'En bild med samma namn finns redan. Byt namn.';
+
+
+
+
+
+
+
+        <script type="text/javascript">
+          jQuery(document).ready(function($) 
+          { 
+            $('#photoimg').live('change', function()	
+            { 
+              $("#preview").html('');
+              $("#preview").html('<img src="/wp-content/themes/smakformat/images/ajax_loader.gif" alt="Laddar upp..."/>');
+              $("#imageform").ajaxForm(
+              {
+                target: '#preview', 
+                success: function(response){
+                  if(response.success == 1){
+                    $("#preview").html(response.filename);
+                    $("#filename").val(response.filename);
+                  } else {
+                    $("#preview").html(response.error_txt);
+                  }
                 }
-                if ($success) {
-                  $result = "$file uploaded successfully.";
-                } else {
-                  $result = "Error uploading $file. Please try again.";
-                }
-                break;
-              case 3:
-              case 6:
-              case 7:
-              case 8:
-                $result = "Error uploading $file. Please try again.";
-                break;
-              case 4:
-                $result = "You didn't select a file to be uploaded.";
-            }
-          } else {
-            $result = "$file is either too big or not an image.";
-          }
-        }
-        ?>       
+              }).submit();
+            });
+          }); 
+        </script>
 
-        <form action="" method="post" enctype="multipart/form-data" name="uploadImage" id="uploadImage">
-          <p>
-            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo MAX_FILE_SIZE; ?>" />
-            <label for="image">Upload image:</label>
-            <input type="file_x" name="image" id="image" />
-          </p>
-          <p>
-            <input type="submit" name="upload" id="upload" value="Upload" />
-          </p>
-        </form>
+
+
 
 
 
@@ -172,8 +155,6 @@ get_header();
       </div>    
     </div>
 
-    <style>
-    </style>    
 
 
     <script type="text/javascript">
@@ -251,7 +232,8 @@ get_header();
             content: $("#annons-txt").val(),
             terms: $("#terms").val(),
             price: $("#price").val(),
-            type: $("#type").val()
+            type: $("#type").val(),
+            filename: $("#filename").val()
           };
           $.post('/wp-admin/admin-ajax.php', data, function(response) {
             if(response.success == 1){

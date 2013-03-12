@@ -230,7 +230,7 @@ function getFyndArray($nbr = 3, $exclude_id = 0) {
     if ($fynd->ID != $exclude_id) {
       $fyndArray[] = $fynd;
     }
-    if(count($fyndArray) == $nbr){
+    if (count($fyndArray) == $nbr) {
       break;
     }
   }
@@ -304,7 +304,9 @@ add_action('wp_ajax_nopriv_add_fynd', 'add_fynd_obj_callback');
 
 /**
  * This function is an Ajax callback.
- * It gets all the data from the post and creates a new fynd-object
+ * 1. It gets all the data from the $_POST and creates a new fynd-object.
+ * 2. Adds the image to media library
+ * 3. Makes the image featured image to the post
  */
 function add_fynd_obj_callback() {
   $order = new stdClass;
@@ -316,13 +318,14 @@ function add_fynd_obj_callback() {
   !empty($_REQUEST['price']) ? $order->price = $_REQUEST['price'] : $order->price = '';
   !empty($_REQUEST['terms']) ? $order->terms = $_REQUEST['terms'] : $order->terms = '';
   !empty($_REQUEST['type']) ? $order->type = $_REQUEST['type'] : $order->type = '';
+  !empty($_REQUEST['filename']) ? $order->filename = $_REQUEST['filename'] : $order->filename = '';
 
   $response = array(
       'success' => 0,
       'error' => 'xxx',
       'annons_type' => $order->type
   );
-
+  // create post
   if ($order->type == 'kop' || $order->type == 'salj') {
     $fynd_post = array(
         'post_title' => $order->title,
@@ -333,9 +336,9 @@ function add_fynd_obj_callback() {
     );
     $post_id = wp_insert_post($fynd_post, true);
 
+    //add some meta fields
     if ($post_id) {
       $success = wp_set_object_terms($post_id, array($order->type, 'glas'), 'fyndkategori', true);
-
       add_post_meta($post_id, 'name', $order->name, true);
       add_post_meta($post_id, '_name', 'field_1', true);
       add_post_meta($post_id, 'email', $order->email, true);
@@ -344,6 +347,45 @@ function add_fynd_obj_callback() {
       add_post_meta($post_id, '_phone', 'field_3', true);
       add_post_meta($post_id, 'price', $order->price, true);
       add_post_meta($post_id, '_price', 'field_7', true);
+
+      //add the image to the media library
+      $order->filename;
+      $uploads = wp_upload_dir(date('Y/m'));
+      $file_with_path = $uploads['path'] . '/' . $order->filename;
+      $wp_filetype = wp_check_filetype(basename($file_with_path), null);
+      $wp_upload_dir = wp_upload_dir(date('Y/m'));
+
+      $attachment = array(
+          'guid' => $wp_upload_dir['url'] . '/' . basename($order->filename),
+          'post_mime_type' => $wp_filetype['type'],
+          'post_title' => preg_replace('/\.[^.]+$/', '', $order->title),
+          'post_content' => '',
+          'post_status' => 'inherit'
+      );
+      $attach_id = wp_insert_attachment($attachment, $file_with_path, $post_id);
+
+      require_once(ABSPATH . 'wp-admin/includes/image.php');
+      $attach_data = wp_generate_attachment_metadata($attach_id, $file_with_path);
+      wp_update_attachment_metadata($attach_id, $attach_data);
+
+/*
+      echo '$wp_filetype';
+      print_r($wp_filetype);
+      echo '$wp_upload_dir';
+      print_r($wp_upload_dir);
+      echo '$attachment';
+      print_r($attachment);
+      echo '$attach_id ' . $attach_id;
+      echo '$attach_data';
+      print_r($attach_data);
+      die();
+*/
+
+      //make the image featured image 
+      set_post_thumbnail($post_id, $attach_id );
+      
+      
+      
       $response = array(
           'success' => 1,
           'post_id' => $post_id,

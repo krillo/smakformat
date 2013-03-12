@@ -63,14 +63,26 @@ li.widget.widget_text {list-style: none outside none;}
 
 
 
+#fynd_form_content{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
+#fynd_form_content INPUT{color:#0C5D83;background-color: #E8F2F8;}
+#photoimg {width:100px;}
+input[type="file"]{width:100px;}
+#fynd_form_content label{display: inline-block;width: 80px;}
+#fynd_form_content #imageform label{display: inline-block;width: 180px; float:left}
+#preview{float:left;}
+#fynd_form_content label#terms-label{width:232px;}
+
 #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
 #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
 #fynd_pop h2{float:left;}
-#fynd_form{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
-#fynd_form INPUT{color:#0C5D83;background-color: #E8F2F8;}
-#fynd_form label{display: inline-block;width: 80px;}
 #annons-txt{color:#0C5D83;width:233px; height: 80px;background-color: #E8F2F8;border-radius: 5px 5px;}
-#fynd_form label#terms-label{width:232px;}
+
+
+
+
+
+
+
 
 
 
