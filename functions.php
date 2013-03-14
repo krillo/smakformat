@@ -211,8 +211,7 @@ function getFyndArray($nbr = 3, $exclude_id = 0) {
   $fynds = $fyndQuery->posts;
   $fyndArray = array();
   foreach ($fynds as $fynd) {
-    //get_the_post_thumbnail( $post_id, $size, $attr );
-    $fynd->fyndkategori = get_the_terms($post->ID, 'fyndkategori');
+    $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
     foreach ($fynd->fyndkategori as $category) {
       switch ($category->slug) {
         case 'kop':
