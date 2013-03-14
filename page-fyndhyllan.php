@@ -49,26 +49,19 @@ get_header();
 
     <div class="overlay hidden">
       <div id="fynd_pop">
-        <h2>Lägg in en annons:</h2>
-
-
+        <h2 id="showtype"></h2>
+        <span id="close"></span>
         <div id="fynd_form_content">
-
           <form id="imageform" method="post" enctype="multipart/form-data" action='/wp-content/themes/smakformat/action/jquery_upload.php'>
             <ul>
               <li>
-                <label for="price">Lägg till bild</label> <div id='preview'></div>
+                <label for="price">Bifoga bild</label> <div id='preview'></div>
               </li>
               <li>
                 <input type="file" name="photoimg" id="photoimg" />
               </li>
             </ul>
           </form>
-
-
-
-
-
           <form action="#" id="fynd_form" mothod="post">
             <input name="type" id="type" type="hidden"/>
             <input name="filename" id="filename" type="hidden"/>
@@ -104,40 +97,14 @@ get_header();
                   <input name="price" id="price" value="" type=""/>
                 </li>
                 <li>          
-                  <label for="terms" id="terms-label">Ja jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
+                  <label for="terms" id="terms-label">Jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
                   <input name="terms" id="terms" type="checkbox" style="float:left;" value ="Ja"/>
                 </li>
               </fieldset>
             </ul>        
             <input name="skicka" id="skicka" type="submit" style="float:right;" value ="Skicka"/>
           </form>
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <script type="text/javascript">
-          jQuery(document).ready(function($) 
-          { 
-
-          }); 
-        </script>
-
-
-
-
-
-
-
       </div>    
     </div>
 
@@ -240,20 +207,22 @@ get_header();
         $("#sell-button").click(function(event) {
           event.preventDefault();
           $("#type").val("salj");
+          $("#showtype").html("Jag vill SÄLJA");
           $(".overlay").show();
         });     
         
         $("#buy-button").click(function(event) {
           event.preventDefault();
-          $("#type").val("kop");          
+          $("#type").val("kop");
+          $("#showtype").html("Jag vill KÖPA");          
           $(".overlay").show();
         });     
        
- /*
-        $('.overlay').click(function(event) {
+        
+        $('#close').click(function(event) {
           $('.overlay').hide('slow');
         }); 
- */
+        
 
         $('#photoimg').live('change', function()	
         { 

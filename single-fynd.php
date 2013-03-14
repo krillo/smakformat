@@ -85,7 +85,8 @@ switch ($fyndtype) {
           </ul>
         </div>
       </div><!--/#post-->
-      <?php if (function_exists('kc_add_social_share')) kc_add_social_share(); ?>
+      <?php //twentyfourEBCode();?> 
+      <div class="clear"></div>
       <?php include 'snippet_fynd_puffs.php'; ?>    
       <?php woo_loop_after(); ?>     
     </div><!-- /#main -->

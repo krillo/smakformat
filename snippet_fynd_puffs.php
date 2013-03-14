@@ -1,5 +1,5 @@
 <div id="fynd-puff">
-  <h3>Ännu mer på fyndhyllan</h3>
+  <h3>Ännu mer på Fyndhyllan</h3>
   <ul>
     <?php
     $count = 3;

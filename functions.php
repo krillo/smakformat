@@ -340,7 +340,7 @@ function add_fynd_obj_callback() {
       $attachment = array(
           'guid' => $wp_upload_dir['url'] . '/' . basename($order->filename),
           'post_mime_type' => $wp_filetype['type'],
-          'post_title' => preg_replace('/\.[^.]+$/', '', $order->title),
+          'post_title' => preg_replace('/\.[^.]+$/', '', 'Fynd_' . $order->title),
           'post_content' => '',
           'post_status' => 'inherit'
       );

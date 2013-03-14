@@ -28,7 +28,7 @@ li.widget.widget_text {list-style: none outside none;}
 #chef{background-image: url(images/chef.png); background-position: 350px 0; background-repeat: no-repeat;overflow: auto;}
 #chef-text{float:left;width:340px;}
 #chef-buttons{float: left;height: 110px;width: 610px;}
-.chef-button{padding:7px 20px;background-image: url(images/blue-gradient.png); border-radius: 15px 15px;color:#fff;font-size: 15px;}
+.chef-button{padding:7px 20px;background-image: url(images/blue-gradient.png); border-radius: 15px 15px;color:#fff;font-size: 15px;cursor:pointer;}
 #buy-button{margin-left: 20px;}
 
 #fynd-list-all{margin-bottom: 20px;}
@@ -63,7 +63,7 @@ li.widget.widget_text {list-style: none outside none;}
 
 
 
-#fynd_form_content{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:90%;padding:15px 20px;float:left;border-radius: 5px 5px;}
+#fynd_form_content{color:#fff;background-image: url(images/blue_gradient_popup.png);width:90%;height:87%;padding:15px 20px;float:left;border-radius: 5px 5px;}
 #fynd_form_content INPUT{color:#0C5D83;background-color: #E8F2F8;}
 #photoimg {width:100px;}
 input[type="file"]{width:100px;}
@@ -78,7 +78,17 @@ input[type="file"]{width:100px;}
 #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}
 #fynd_pop h2{float:left;}
 #annons-txt{color:#0C5D83;width:233px; height: 80px;background-color: #E8F2F8;border-radius: 5px 5px;}
-
+#showtype{float:left;}
+#close {
+    background-image: url("images/close.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: block;
+    float: right;    
+    min-height: 16px;
+    min-width: 16px;
+    overflow: visible;    
+}#close:hover{cursor: pointer; }
 
 
 
