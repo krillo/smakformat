@@ -25,9 +25,9 @@ Template: canvas
 li.widget.widget_text {list-style: none outside none;}
 #tabs ul.wooTabs li a {padding: 5px 4px 3px;}
 
-#chef{background-image: url(images/chef.png); background-position: 350px 0; background-repeat: no-repeat;overflow: auto;}
+#chef{background-image: url(images/chef.png); background-position: 350px 0; background-repeat: no-repeat;min-height: 422px;}
 #chef-text{float:left;width:340px;}
-#chef-buttons{float: left;height: 110px;width: 610px;}
+#chef-buttons{float: left;height: 50px;width: 610px;}
 .chef-button{padding:7px 20px;background-image: url(images/blue-gradient.png); border-radius: 15px 15px;color:#fff;font-size: 15px;cursor:pointer;}
 #buy-button{margin-left: 20px;}
 
