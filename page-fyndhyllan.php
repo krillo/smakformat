@@ -97,7 +97,7 @@ get_header();
                   <input name="price" id="price" value="" type=""/>
                 </li>
                 <li>          
-                  <label for="terms" id="terms-label">Jag har läst och godkänner villkoren <span class="mandatory">*</span></label>
+                  <label for="terms" id="terms-label"><a href="/fyndhyllan/villkor/" target="_blank">Jag har läst och godkänner villkoren </a><span class="mandatory">*</span></label>
                   <input name="terms" id="terms" type="checkbox" style="float:left;" value ="Ja"/>
                 </li>
               </fieldset>
