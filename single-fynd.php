@@ -68,7 +68,7 @@ switch ($fyndtype) {
         <div id="" class="fynd-img">
           <?php
           if (has_post_thumbnail()) {
-            the_post_thumbnail();
+            the_post_thumbnail(get_the_ID(), array(500, 500));
           }
           ?> 
         </div>
