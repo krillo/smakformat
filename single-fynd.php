@@ -12,7 +12,6 @@
 get_header();
 global $woo_options;
 
-
 /*
   $output = shell_exec('git help');
   echo "<pre>$output</pre>";
@@ -22,16 +21,6 @@ $fyndtype = $fyndObject->fynd_type;
 $fyndtype_txt = $fyndObject->fynd_type_name;
 $fynd_cat_slug = $fyndObject->fynd_cat_slug;
 
-/*
-if(isset($_SESSION['views']))
-    $_SESSION['views'] = $_SESSION['views']+ 1;
-else
-    $_SESSION['views'] = 1;
-
-echo "views = ". $_SESSION['views']; 
- * 
- * 
- */
 ?>
 
 <!-- #content Starts -->
@@ -61,7 +50,7 @@ echo "views = ". $_SESSION['views'];
         <div id="" class="fynd-img">
           <?php
           if (has_post_thumbnail()) {
-            the_post_thumbnail(array(300, 300));
+            the_post_thumbnail('medium'); 
           }
           ?> 
         </div>

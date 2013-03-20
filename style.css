@@ -13,14 +13,8 @@ Template: canvas
 .hidden{display:none;}
 .margin{margin-bottom:20px;}
 
-
-
 #header-container #header {padding-top: 10px;height:142px;}
 #header #logo {padding-top: 40px;}
-
-
-
-
 
 li.widget.widget_text {list-style: none outside none;}
 #tabs ul.wooTabs li a {padding: 5px 4px 3px;}
@@ -47,8 +41,8 @@ li.widget.widget_text {list-style: none outside none;}
 
 
 .fynd-content{border-bottom: 2px solid #ddd;}
-.fynd-img{border:1px solid #E4E4E4;width:608px;text-align: center;}
-.fynd-img image{  }
+.fynd-img{text-align: center;}
+.fynd-img img{border:1px solid #ddd;padding:3px;  }
 .fynd-title{margin:20px 0 0 20px;}
 .fynd-text{float:left;width:280px;margin: 20px;}
 .fynd-contact{float:left;width:220px;margin: 20px 20px 20px 40px;}
@@ -114,14 +108,9 @@ div.SlideshowWidget h3{font-size:22px;}
 }
 
 
-
 #head-img{float:right;height: 100px;width: 300px;}
 #head-slogan {background-image: url("images/vi_kryddar.png");background-position: 0 24px;background-repeat: no-repeat;float: right;height: 160px;width: 160px;}  
 
-
-.hidden {
-    display:none;
-}
 .fynd-cat{
     cursor:pointer;
     font-size: 18px;
@@ -129,5 +118,3 @@ div.SlideshowWidget h3{font-size:22px;}
 }
 .article-list-link{padding-left:20px;}
 ul.article-list .article-list-link:first-child{margin-top: 0;}
-
-
