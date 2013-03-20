@@ -200,14 +200,52 @@ function getFyndList($sell = true) {
 }
 
 /**
+ * Get all lists of fynd objects categorised by category and kop, salj 
+ * returns ul-li list of all objects, all with class hidden
+ * @param type $sell 
+ */
+function getAllFyndListsByType($fyndtype = 'salj') {
+  $cats = getFyndCategories();
+  $output_salj .= '';
+  $output_kop .= '';
+  foreach ($cats as $cat) {
+    if ($cat->slug != "salj" && $cat->slug != "kop") {
+      $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="article-salj-' . $cat->slug . '" class="fynd-cat" >' . $cat->slug . '</a></li>';
+      $output_kop  .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . $cat->slug . '</a></li>';
+      $output_salj .= '<ul id="article-salj-' . $cat->slug . '" class="article-list"  style="display:none;">';
+      $output_kop .= '<ul id="article-kop-' . $cat->slug . '" class="article-list"  style="display:none;">';
+      $fyndArray = getFyndArray(1000, 0, $cat->slug);
+      foreach ($fyndArray as $fynd) {
+        if ($fynd->fynd_type == 'salj') {
+          $output_salj .= '<li class="article-list-link"><a href="' . $fynd->guid . '">' . $fynd->post_title . '</a></li>';
+        } else {
+          $output_kop .= '<li class="article-list-link"><a href="' . $fynd->guid . '">' . $fynd->post_title . '</a></li>';
+        }
+      }
+      $output_salj .= '</ul>';
+      $output_kop .= '</ul>';
+    }
+  }
+  if($fyndtype == "salj"){
+    return $output_salj;
+  } else {
+    return $output_kop;
+  }
+}
+
+/**
  * Return an array of fynd. 
  * All types and order by date
  * All fyndcategories ara there and also fynd_type
  * 
  * @param type $nbr 
  */
-function getFyndArray($nbr = 3, $exclude_id = 0) {
-  $fyndQuery = new WP_Query(array('orderby' => 'rand', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd')));
+function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
+  if ($fyndCatSlug != '') {
+    $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndCatSlug))));
+  } else {
+    $fyndQuery = new WP_Query(array('orderby' => 'rand', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd')));
+  }
   $fynds = $fyndQuery->posts;
   $fyndArray = array();
   foreach ($fynds as $fynd) {
@@ -262,13 +300,47 @@ function getFyndDropdown($selectedId, $fyndtype) {
 }
 
 /**
+ * Get a fynd object with all taxonomies populated
+ * @param type $postId
+ * @return type 
+ */
+function getFyndObject($postId) {
+  $fynd = get_post($postId);
+  $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+  foreach ($fynd->fyndkategori as $category) {
+    switch ($category->slug) {
+      case 'kop':
+        $fynd->fynd_type = 'kop';
+        $fynd->fynd_type_name = 'köpes';
+        break;
+      case 'salj':
+        $fynd->fynd_type = 'salj';
+        $fynd->fynd_type_name = 'säljes';
+        break;
+      default:
+        break;
+    }
+  }
+  return $fynd;
+}
+
+/**
+ * Returns an array of all categories for fynd
+ * "Köp" and "Sälj" are also categories, these are excluded
+ *  
+ */
+function getFyndCategories() {
+  $categories = get_terms('fyndkategori', array('orderby' => 'name', 'hide_empty' => 0));
+  return $categories;
+}
+
+/**
  * Returns an array of all categories for fynd
  * "Köp" and "Sälj" are also categories, these are excluded
  *  
  */
 function getFyndCategoriesDropdown() {
-  $categories = get_terms('fyndkategori', array('orderby' => 'name', 'hide_empty' => 0));
-
+  $categories = getFyndCategories();
   $output = '<select class="" id="fynd-cat-drop" name="fynd-cat">';
   foreach ($categories as $cat) {
     if ($cat->slug != 'kop' && $cat->slug != 'salj') {
@@ -277,7 +349,25 @@ function getFyndCategoriesDropdown() {
   }
   $output .= '</select>';
   return $output;
+}
 
+/**
+ * Returns a list of all categories for fynd
+ * "Köp" and "Sälj" are also categories, these are excluded
+ * 
+ * output in this format:
+ * <a href="koksmaskiner/kop">Köksmaskiner</a>
+ * handle the href with jQuery
+ */
+function getFyndCategoryList($arg = 'salj') {
+  $categories = getFyndCategories();
+  $output = '';
+  foreach ($categories as $cat) {
+    if ($cat->slug != 'kop' && $cat->slug != 'salj') {
+      $output .= '<li><a href="fynd-list-' . $arg . '-' . $cat->slug . '" class="fynd-cat-list ' . $arg . '">' . $cat->name . '</a></li>';
+    }
+  }
+  return $output;
 }
 
 add_action('wp_ajax_add_fynd', 'add_fynd_obj_callback');

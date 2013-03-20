@@ -13,7 +13,7 @@
       } else {
         $class = '';
       }
-      echo '<a href="' . $fynd->guid . '?fyndtype=' . $fynd->fynd_type . '"><li class="' . $class . '">' . get_the_post_thumbnail($fynd->ID, array(174, 174)) . '<div class="fynd-puff-heading">' . $fynd->post_title . '</div></li></a>';
+      echo '<a href="' . $fynd->guid . '"><li class="' . $class . '">' . get_the_post_thumbnail($fynd->ID, array(174, 174)) . '<div class="fynd-puff-heading">' . $fynd->post_title . '</div></li></a>';
     }
     ?>        
   </ul>   

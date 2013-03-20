@@ -17,6 +17,7 @@ global $woo_options;
   $output = shell_exec('git help');
   echo "<pre>$output</pre>";
  */
+/*
 !empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
 switch ($fyndtype) {
   case 'kop':
@@ -29,26 +30,30 @@ switch ($fyndtype) {
     $fyndtype_txt = '';
     break;
 }
+*/
+
+$fyndObject = getFyndObject(get_the_ID());
+$fyndtype = $fyndObject->fynd_type;
+$fyndtype_txt = $fyndObject->fynd_type_name;
+
+if(isset($_SESSION['views']))
+    $_SESSION['views'] = $_SESSION['views']+ 1;
+else
+    $_SESSION['views'] = 1;
+
+echo "views = ". $_SESSION['views']; 
 ?>
 
 <!-- #content Starts -->
 <?php woo_content_before(); ?>
 <div id="content" class="col-full">
-
   <div id="main-sidebar-container">    
-
     <?php woo_main_before(); ?>
     <div id="main" class="">                       
-
-
-
-
-
 
       <script type="text/javascript">
         jQuery(document).ready(function($){   
     
-
           $('#fynd-drop').change(function() {
             var url;
             var fyndtype;
@@ -60,15 +65,13 @@ switch ($fyndtype) {
         });
       </script>
 
-
-
       <input id="fyndtype" value="<?php echo $fyndtype; ?>"  name="fyndtype" type="hidden" />
       <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas <?php echo $fyndtype_txt ?>: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
           <?php
           if (has_post_thumbnail()) {
-            the_post_thumbnail(get_the_ID(), array(500, 500));
+            the_post_thumbnail(array(300, 300));
           }
           ?> 
         </div>

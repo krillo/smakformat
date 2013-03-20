@@ -1,5 +1,8 @@
-<?php 
-!empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
+<?php
+$fyndObject = getFyndObject(get_the_ID());
+$fyndtype = $fyndObject->fynd_type;
+$fyndtype_txt = $fyndObject->fynd_type_name;
+
 $buyClass = $sellClass = $buyClassHide = $sellClassHide = '';
 switch ($fyndtype) {
   case 'kop':
@@ -12,7 +15,7 @@ switch ($fyndtype) {
     break;
   default:  //show sell as default
     $buyClass = 'fynd-list-selected';
-    $sellClassHide = 'hidden';    
+    $sellClassHide = 'hidden';
     break;
 }
 ?>
@@ -23,19 +26,18 @@ switch ($fyndtype) {
     <a href="#"  class="fynd-list-selector <?php echo $sellClass ?>"  id="fynd-list-sell">SÄLJ</a>
   </div>
   <ul id="list-buy" class="fynd-list <?php echo $buyClassHide; ?>">
-    <?php getFyndList(false); ?>            
+      <?php echo getAllFyndListsByType('kop'); ?>
   </ul>
   <ul id="list-sell" class="fynd-list <?php echo $sellClassHide; ?>">
-    <?php getFyndList(true); ?>     
-
+      <?php echo getAllFyndListsByType('salj'); ?>
   </ul>          
 </div>
 
 <script type="text/javascript">
   jQuery(document).ready(function($){
-    
-    
+        
     $('#fynd-list-buy').click(function(event) {
+      hideAllArticleLists();
       $('#list-buy').show('slow');
       $('#list-sell').hide('slow');      
       $('#fynd-list-buy').addClass('fynd-list-selected');
@@ -43,66 +45,83 @@ switch ($fyndtype) {
     });    
 
     $('#fynd-list-sell').click(function(event) {
+      hideAllArticleLists();      
       $('#list-buy').hide('slow');
       $('#list-sell').show('slow');
       $('#fynd-list-buy').removeClass('fynd-list-selected');
       $('#fynd-list-sell').addClass('fynd-list-selected');      
     });    
+
+
+    $('.fynd-cat-list').click(function(event) {
+      event.preventDefault();
+      var showUl = $(this).attr('href');
+      hideCategories();
+      $('#' + showUl).show('slow');
+
+    });    
     
-    //$("#ss-progress").show();
-    $('#no-city').hide();
-    $('.choose-areas').hide(); 
-    var kommun_id = $('#kommun-id').val();
-    if(kommun_id == ''){
-      $('.choose-areas').hide();
-      $('#no-city').show();
-    } else{
-      $('.choose-areas').show();
-      getPutsschema(kommun_id);
+    
+    $('.back-to-cat').click(function(event) {
+      event.preventDefault();
+      var showType = $(this).attr('href');
+      hideAllArticleLists();
+      $('#' + showType).show('slow');
+
+    });    
+    
+    
+    
+    
+    
+    function hideCategories(){
+      $('#list-buy').hide('slow');
+      $('#list-sell').hide('slow');  
+    }        
+    
+    function hideAllArticleLists(){
+      $('.article-list').hide('slow'); 
+    }        
+    
+    
+    
+    
+    
+    
+
+    $('.fynd-cat').click(function (event) {
+      event.preventDefault();
+      var showUl = $(this).attr('href');
+      $('#'+showUl).slideToggle();
+      /*
+      if($('#'+showUl).is(':visible')){
+        alert('visible');
+        $('#'+showUl).hide('slow');//slideToggle();
+      }else {
+        alert('hidden');
+        $('#'+showUl).show('slow');//slideToggle();
+      }
+       */    
+      //$(this).find('ul').slideToggle();
+    
+    });
+  
+  
+    /*
+$('.fynd-cat').click(function () {
+
+if($(this).find('ul').is(':visible')){
+      alert('visible');
+      $(this).find('ul').hide('slow');//slideToggle();
+    }else {
+      alert('hidden');
+      $(this).find('ul').show('slow');//slideToggle();
     }
     
-    /**
-     * Ajax call to get all areas and schedule id's 
-     */
-    function getPutsschema(kommun_id){
-      var data = {
-        action : 'get_putsschema',
-        kommun_id: kommun_id
-      };
-      $.post('/wp-admin/admin-ajax.php', data, function(response) {
-        var rows = '';
-        var city = '';
-        $(response).each(function( index, row ) {
-          var li = '<input type="radio" id="id-'+row.id+'" name="area" class="area" value="'+row.schedule+'"><label for="id-'+row.id+'">'+row.area+' ('+row.schedule+')</label><br />';
-          rows += li;
-          city = row.city;
-        });
-        $('#area-list').append(rows);
-        $('#city').html(city);        
-      });  
-    }
+    //$(this).find('ul').slideToggle();
     
-    function hideAllPutsschema(){
-      $('#schedule-1').hide('slow');
-      $('#schedule-2').hide('slow');
-      $('#schedule-3').hide('slow');
-      $('#schedule-4').hide('slow');
-      $('#schedule-5').hide('slow');
-      $('#schedule-6').hide('slow');
-      $('#schedule-7').hide('slow');      
-    } 
- 
-
-    $('.overlay').click(function(event) {
-      hideAllPutsschema();
-    });
-
- 
-    $('.area').live('click', function(e){
-      hideAllPutsschema();
-      var schedule_id = $(this).attr('value');    
-      $('#schedule-'+schedule_id).show();
-    });
-
+});
+     */    
+    
   });  
 </script>      

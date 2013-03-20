@@ -36,7 +36,7 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-list-head .fynd-list-selector{color:#fff;border-right: 2px #fff solid;padding: 10px 20px;}
 #fynd-list-buy{}
 #fynd-list-sell{}
-.fynd-list{overflow-x: hidden;overflow-y: scroll;height:300px;}
+.fynd-list{overflow-x: hidden;overflow-y: auto;min-height:100px;max-height:800px;}
 .fynd-list-selected{font-weight: bold;font-size: 14px;}
 .fynd-list li:first-child{margin-top: 10px;}
 .fynd-list li{margin-left: 10px;}
@@ -93,12 +93,7 @@ input[type="file"]{width:100px;}
     overflow: visible;    
 }#close:hover{cursor: pointer; }
 
-
-
-
-
-
-
+div.SlideshowWidget h3{font-size:22px;}
 
 
 .overlay {
@@ -110,14 +105,12 @@ input[type="file"]{width:100px;}
   width: 100%;
   z-index: 1000;  
 }
-
 #fynd_pop{
     position:fixed;
   top:50%;
   left:50%;
   margin-top:-270px;
   margin-left:-160px; 
-
 }
 
 
@@ -126,20 +119,15 @@ input[type="file"]{width:100px;}
 #head-slogan {background-image: url("images/vi_kryddar.png");background-position: 0 24px;background-repeat: no-repeat;float: right;height: 160px;width: 160px;}  
 
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-
+.hidden {
+    display:none;
 }
-
-
-
-
-
-/* Maximum width */
-@media screen and (max-width: 910px) {
-  body {
-    background: #ffe11a;
-  }
+.fynd-cat{
+    cursor:pointer;
+    font-size: 18px;
+    text-transform: capitalize;
 }
+.article-list-link{padding-left:20px;}
+ul.article-list .article-list-link:first-child{margin-top: 0;}
+
+
