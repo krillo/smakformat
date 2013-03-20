@@ -42,7 +42,7 @@ li.widget.widget_text {list-style: none outside none;}
 
 .fynd-content{border-bottom: 2px solid #ddd;}
 .fynd-img{text-align: center;}
-.fynd-img img{border:1px solid #ddd;padding:3px;  }
+.fynd-img img{border:1px solid #ddd;padding:3px;  background-color: #fff;}
 .fynd-title{margin:20px 0 0 20px;}
 .fynd-text{float:left;width:280px;margin: 20px;}
 .fynd-contact{float:left;width:220px;margin: 20px 20px 20px 40px;}
