@@ -20,7 +20,6 @@ $fyndObject = getFyndObject(get_the_ID());
 $fyndtype = $fyndObject->fynd_type;
 $fyndtype_txt = $fyndObject->fynd_type_name;
 $fynd_cat_slug = $fyndObject->fynd_cat_slug;
-
 ?>
 
 <!-- #content Starts -->
@@ -50,7 +49,7 @@ $fynd_cat_slug = $fyndObject->fynd_cat_slug;
         <div id="" class="fynd-img">
           <?php
           if (has_post_thumbnail()) {
-            the_post_thumbnail('medium'); 
+          the_post_thumbnail('medium');
           }
           ?> 
         </div>
@@ -79,7 +78,7 @@ $fynd_cat_slug = $fyndObject->fynd_cat_slug;
 
     <div id="sidebar">
       <?php include_once 'snippet_list_fynd.php'; ?>
-      <?php if (!function_exists('dynamic_sidebar') || !dynamic_sidebar("fyndhyllan")) : endif; ?>    
+      <?php if (!function_exists('dynamic_sidebar') ||!dynamic_sidebar("fyndhyllan")) : endif; ?>    
     </div>
 
 
