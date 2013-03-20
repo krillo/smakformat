@@ -25,7 +25,7 @@ global $woo_options;
     <meta charset="<?php echo esc_attr(get_bloginfo('charset')); ?>" />
     <title><?php woo_title(); ?></title>
 <?php woo_meta(); ?>
-    <link rel="stylesheet" type="text/css" href="<?php echo esc_url(get_bloginfo('stylesheet_url')); ?>?ver=1.0" media="all" />
+    <link rel="stylesheet" type="text/css" href="<?php echo esc_url(get_bloginfo('stylesheet_url')); ?>?ver=1.1" media="all" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="pingback" href="<?php echo esc_url(get_bloginfo('pingback_url')); ?>" />
     <?php wp_head(); ?>

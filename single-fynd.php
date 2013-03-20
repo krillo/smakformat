@@ -36,12 +36,17 @@ $fyndObject = getFyndObject(get_the_ID());
 $fyndtype = $fyndObject->fynd_type;
 $fyndtype_txt = $fyndObject->fynd_type_name;
 
+
+/*
 if(isset($_SESSION['views']))
     $_SESSION['views'] = $_SESSION['views']+ 1;
 else
     $_SESSION['views'] = 1;
 
 echo "views = ". $_SESSION['views']; 
+ * 
+ * 
+ */
 ?>
 
 <!-- #content Starts -->
