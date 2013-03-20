@@ -2,6 +2,9 @@
 $fyndObject = getFyndObject(get_the_ID());
 $fyndtype = $fyndObject->fynd_type;
 $fyndtype_txt = $fyndObject->fynd_type_name;
+$fynd_cat_slug = $fyndObject->fynd_cat_slug;
+$js_show_id = "'#article-" . $fyndtype . '-' . $fynd_cat_slug . "'";
+
 
 $buyClass = $sellClass = $buyClassHide = $sellClassHide = '';
 switch ($fyndtype) {
@@ -35,6 +38,10 @@ switch ($fyndtype) {
 
 <script type="text/javascript">
   jQuery(document).ready(function($){
+    
+    //open the same category as the shown fynd post
+    $(<?php echo $js_show_id; ?>).show();
+    
         
     $('#fynd-list-buy').click(function(event) {
       hideAllArticleLists();
@@ -51,28 +58,6 @@ switch ($fyndtype) {
       $('#fynd-list-buy').removeClass('fynd-list-selected');
       $('#fynd-list-sell').addClass('fynd-list-selected');      
     });    
-
-
-    $('.fynd-cat-list').click(function(event) {
-      event.preventDefault();
-      var showUl = $(this).attr('href');
-      hideCategories();
-      $('#' + showUl).show('slow');
-
-    });    
-    
-    
-    $('.back-to-cat').click(function(event) {
-      event.preventDefault();
-      var showType = $(this).attr('href');
-      hideAllArticleLists();
-      $('#' + showType).show('slow');
-
-    });    
-    
-    
-    
-    
     
     function hideCategories(){
       $('#list-buy').hide('slow');
@@ -83,45 +68,12 @@ switch ($fyndtype) {
       $('.article-list').hide('slow'); 
     }        
     
-    
-    
-    
-    
-    
 
     $('.fynd-cat').click(function (event) {
       event.preventDefault();
       var showUl = $(this).attr('href');
       $('#'+showUl).slideToggle();
-      /*
-      if($('#'+showUl).is(':visible')){
-        alert('visible');
-        $('#'+showUl).hide('slow');//slideToggle();
-      }else {
-        alert('hidden');
-        $('#'+showUl).show('slow');//slideToggle();
-      }
-       */    
-      //$(this).find('ul').slideToggle();
-    
-    });
-  
-  
-    /*
-$('.fynd-cat').click(function () {
-
-if($(this).find('ul').is(':visible')){
-      alert('visible');
-      $(this).find('ul').hide('slow');//slideToggle();
-    }else {
-      alert('hidden');
-      $(this).find('ul').show('slow');//slideToggle();
-    }
-    
-    //$(this).find('ul').slideToggle();
-    
-});
-     */    
+    });    
     
   });  
 </script>      

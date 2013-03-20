@@ -318,6 +318,7 @@ function getFyndObject($postId) {
         $fynd->fynd_type_name = 'säljes';
         break;
       default:
+        $fynd->fynd_cat_slug = $category->slug;
         break;
     }
   }

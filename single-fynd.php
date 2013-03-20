@@ -17,25 +17,10 @@ global $woo_options;
   $output = shell_exec('git help');
   echo "<pre>$output</pre>";
  */
-/*
-!empty($_REQUEST['fyndtype']) ? $fyndtype = $_REQUEST['fyndtype'] : $fyndtype = '';
-switch ($fyndtype) {
-  case 'kop':
-    $fyndtype_txt = 'Köpes';
-    break;
-  case 'salj':
-    $fyndtype_txt = 'Säljes';
-    break;
-  default:
-    $fyndtype_txt = '';
-    break;
-}
-*/
-
 $fyndObject = getFyndObject(get_the_ID());
 $fyndtype = $fyndObject->fynd_type;
 $fyndtype_txt = $fyndObject->fynd_type_name;
-
+$fynd_cat_slug = $fyndObject->fynd_cat_slug;
 
 /*
 if(isset($_SESSION['views']))
