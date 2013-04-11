@@ -114,7 +114,6 @@ div.SlideshowWidget h3{font-size:22px;}
 .fynd-cat{
     cursor:pointer;
     font-size: 18px;
-    text-transform: capitalize;
 }
 .article-list-link{padding-left:20px;}
 ul.article-list .article-list-link:first-child{margin-top: 0;}

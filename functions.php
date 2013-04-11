@@ -210,8 +210,8 @@ function getAllFyndListsByType($fyndtype = 'salj') {
   $output_kop .= '';
   foreach ($cats as $cat) {
     if ($cat->slug != "salj" && $cat->slug != "kop") {
-      $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="article-salj-' . $cat->slug . '" class="fynd-cat" >' . $cat->slug . '</a></li>';
-      $output_kop  .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . $cat->slug . '</a></li>';
+      $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="article-salj-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
+      $output_kop  .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
       $output_salj .= '<ul id="article-salj-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $output_kop .= '<ul id="article-kop-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $fyndArray = getFyndArray(1000, 0, $cat->slug);
