@@ -72,8 +72,6 @@ function footer_container_start() {
 }
 ?>
 <?php
-
-
 /**
  * Description: All below is added by //krillo 
  * 1. cleanup the admin page
@@ -102,10 +100,6 @@ function remove_dashboard_widgets() {
   remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side'); // Senaste utkasten
   remove_meta_box('dashboard_secondary', 'dashboard', 'side'); // Andra WordPressnyheter
 }
-
-
-
-
 
 register_sidebar(array(
     'name' => __('Puff fyndhyllan'),
@@ -246,7 +240,7 @@ function getAllFyndListsByType($fyndtype = 'salj') {
   foreach ($cats as $cat) {
     if ($cat->slug != "salj" && $cat->slug != "kop") {
       $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="article-salj-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
-      $output_kop  .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
+      $output_kop .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
       $output_salj .= '<ul id="article-salj-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $output_kop .= '<ul id="article-kop-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $fyndArray = getFyndArray(1000, 0, $cat->slug);
@@ -261,7 +255,7 @@ function getAllFyndListsByType($fyndtype = 'salj') {
       $output_kop .= '</ul>';
     }
   }
-  if($fyndtype == "salj"){
+  if ($fyndtype == "salj") {
     return $output_salj;
   } else {
     return $output_kop;
@@ -340,24 +334,28 @@ function getFyndDropdown($selectedId, $fyndtype) {
  * @return type 
  */
 function getFyndObject($postId) {
-  $fynd = get_post($postId);
-  $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
-  foreach ($fynd->fyndkategori as $category) {
-    switch ($category->slug) {
-      case 'kop':
-        $fynd->fynd_type = 'kop';
-        $fynd->fynd_type_name = 'köpes';
-        break;
-      case 'salj':
-        $fynd->fynd_type = 'salj';
-        $fynd->fynd_type_name = 'säljes';
-        break;
-      default:
-        $fynd->fynd_cat_slug = $category->slug;
-        break;
+  if (!empty($postId)) {
+    $fynd = get_post($postId);
+    $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+    foreach ($fynd->fyndkategori as $category) {
+      switch ($category->slug) {
+        case 'kop':
+          $fynd->fynd_type = 'kop';
+          $fynd->fynd_type_name = 'köpes';
+          break;
+        case 'salj':
+          $fynd->fynd_type = 'salj';
+          $fynd->fynd_type_name = 'säljes';
+          break;
+        default:
+          $fynd->fynd_cat_slug = $category->slug;
+          break;
+      }
     }
+    return $fynd;
+  } else {
+    return null;
   }
-  return $fynd;
 }
 
 /**
