@@ -334,9 +334,10 @@ function getFyndDropdown($selectedId, $fyndtype) {
  * @return type 
  */
 function getFyndObject($postId) {
-  if (!empty($postId)) {
-    $fynd = get_post($postId);
-    $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+  $fynd = get_post($postId);
+  $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+  if (!empty($fynd->fyndkategori)) {
+    print_r($fynd);
     foreach ($fynd->fyndkategori as $category) {
       switch ($category->slug) {
         case 'kop':
