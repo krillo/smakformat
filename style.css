@@ -44,7 +44,7 @@ li.widget.widget_text {list-style: none outside none;}
 
 #fynd-cat-list{margin-top: 10px;}
 .fynd-cat-list-head{font-size:15px;  color: #FFFFFF;}
-.fynd-cat-list-obj{float:left;width:235px;margin-top: 0px;margin-left: 10px;background-color: #fff;padding:20px;}
+.fynd-cat-list-obj{float:left;width:235px;margin-top: 0px;margin-left: 10px;padding:20px;}
 .fynd-cat-list-obj a img{width:230px; height:230px;padding: 5px;border:solid 1px #ddd;background-color: #fff;text-align: center;}
 .fynd-cat-list-obj p{padding:10px;color: #555555;height:30px;margin-bottom: 20px;overflow: hidden;}
 .obj-price{font-weight: bold;color: #555555;float:left;}
