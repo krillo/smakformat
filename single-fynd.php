@@ -63,6 +63,8 @@ $fynd_cat_slug = $fyndObject->fynd_cat_slug;
             <li>Namn: <?php the_field("name"); ?></li>
             <li>Tel: <a href="tel:+46<?php the_field("phone"); ?>"><?php the_field("phone"); ?></a></li>
             <li>Email: <a href="mailto:<?php the_field("email"); ?>"><?php the_field("email"); ?></a></li>
+            <li>&nbsp;</li>
+            <li><a href="javascript:history.go(-1);">Tillbaka</a></li>
           </ul>
         </div>
       </div><!--/#post-->

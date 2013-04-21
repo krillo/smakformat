@@ -228,6 +228,10 @@ function getFyndList($sell = true) {
   wp_reset_query();
 }
 
+function getFyndNiceName($slug) {
+  return get_term_by(16, 'name', 'fyndkategori');
+}
+
 /**
  * Get all lists of fynd objects categorised by category and kop, salj 
  * returns ul-li list of all objects, all with class hidden
@@ -239,8 +243,8 @@ function getAllFyndListsByType($fyndtype = 'salj') {
   $output_kop .= '';
   foreach ($cats as $cat) {
     if ($cat->slug != "salj" && $cat->slug != "kop") {
-      $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="article-salj-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
-      $output_kop .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="article-kop-' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
+      $output_salj .= '<li><a id="fynd-list-salj-' . $cat->slug . '" href="/fyndhyllan-kategorier/?type=salj&cat=' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
+      $output_kop .= '<li><a id="fynd-list-kop-' . $cat->slug . '" href="/fyndhyllan-kategorier/?type=kop&cat=' . $cat->slug . '" class="fynd-cat" >' . ucfirst($cat->name) . '</a></li>';
       $output_salj .= '<ul id="article-salj-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $output_kop .= '<ul id="article-kop-' . $cat->slug . '" class="article-list"  style="display:none;">';
       $fyndArray = getFyndArray(1000, 0, $cat->slug);
@@ -279,6 +283,11 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
   $fyndArray = array();
   foreach ($fynds as $fynd) {
     $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+    $meta = get_post_meta($fynd->ID);
+    $fynd->name = $meta['name'][0];
+    $fynd->email = $meta['email'][0];
+    $fynd->price = $meta['price'][0];
+    $fynd->phone = $meta['phone'][0];
     foreach ($fynd->fyndkategori as $category) {
       switch ($category->slug) {
         case 'kop':
@@ -401,6 +410,28 @@ function getFyndCategoryList($arg = 'salj') {
       $output .= '<li><a href="fynd-list-' . $arg . '-' . $cat->slug . '" class="fynd-cat-list ' . $arg . '">' . $cat->name . '</a></li>';
     }
   }
+  return $output;
+}
+
+/**
+ * Get all 
+ * 
+ * @param type $arg
+ * @return string 
+ */
+function getFyndListByCategory($arg) {
+  $categories = getFyndCategories();
+  $output = '';
+  print_r($categories);
+
+  /*
+    foreach ($categories as $cat) {
+    if ($cat->slug != 'kop' && $cat->slug != 'salj') {
+    $output .= '<li><a href="fynd-list-' . $arg . '-' . $cat->slug . '" class="fynd-cat-list ' . $arg . '">' . $cat->name . '</a></li>';
+    }
+    }
+   * 
+   */
   return $output;
 }
 

@@ -25,8 +25,8 @@ switch ($fyndtype) {
 
 <div id="fynd-list-all">
   <div class="fynd-list-head" >
-    <a href="#" class="fynd-list-selector <?php echo $buyClass ?>" id="fynd-list-buy">KÖP</a>
     <a href="#"  class="fynd-list-selector <?php echo $sellClass ?>"  id="fynd-list-sell">SÄLJ</a>
+    <a href="#" class="fynd-list-selector-buy <?php echo $buyClass ?>" id="fynd-list-buy">KÖP</a>
   </div>
   <ul id="list-buy" class="fynd-list <?php echo $buyClassHide; ?>">
       <?php echo getAllFyndListsByType('kop'); ?>
@@ -72,7 +72,10 @@ switch ($fyndtype) {
     $('.fynd-cat').click(function (event) {
       event.preventDefault();
       var showUl = $(this).attr('href');
-      $('#'+showUl).slideToggle();
+      //$('#'+showUl).slideToggle();
+      
+      window.location.href =  showUl; 
+      
     });    
     
   });  

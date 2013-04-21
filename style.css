@@ -27,11 +27,12 @@ li.widget.widget_text {list-style: none outside none;}
 
 #fynd-list-all{margin-bottom: 20px;}
 .fynd-list-head{padding:5px;background-image: url(images/blue-gradient.png); border-radius: 3px 3px 0 0;}
-.fynd-list-head .fynd-list-selector{color:#fff;border-right: 2px #fff solid;padding: 10px 20px;}
+.fynd-list-head .fynd-list-selector{color:#eee;border-right: 2px #fff solid;padding: 10px 20px;}
+.fynd-list-head .fynd-list-selector-buy{color:#fff;border-left: 2px #fff solid;float:right; padding: 10px 20px; position: relative;top: -10px;}
 #fynd-list-buy{}
 #fynd-list-sell{}
 .fynd-list{overflow-x: hidden;overflow-y: auto;min-height:100px;max-height:800px;}
-.fynd-list-selected{font-weight: bold;font-size: 14px;}
+.fynd-list-selected{font-weight: bold;font-size: 15px;}
 .fynd-list li:first-child{margin-top: 10px;}
 .fynd-list li{margin-left: 10px;}
 
@@ -39,6 +40,13 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-list-head-text a{color:#fff;font-size: 15px; font-weight: bold;}
 .fynd-list-head-title{color:#fff;font-size: 15px; width:300px;display: inline;}
 
+
+.fynd-cat-list-head{font-size:15px;  color: #FFFFFF;}
+.fynd-cat-list-obj{float:left;width:235px;margin-top: 0px;margin-left: 10px;background-color: #fff;padding:20px;}
+.fynd-cat-list-obj a img{width:230px; height:230px;padding: 5px;border:solid 1px #ddd;background-color: #fff;text-align: center;}
+.fynd-cat-list-obj p{padding:10px;color: #555555;height:30px;margin-bottom: 20px;overflow: hidden;}
+.obj-price{font-weight: bold;color: #555555;float:left;}
+.obj-info{font-weight: bold;background-color: #ddd;color: #555555;float:right;padding:3px 15px;border-radius: 10px 10px;}
 
 .fynd-content{border-bottom: 2px solid #ddd;}
 .fynd-img{text-align: center;}
