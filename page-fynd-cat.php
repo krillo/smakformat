@@ -11,15 +11,31 @@
  */
 $cat = $_REQUEST['cat'];
 $type = $_REQUEST['type'];
-$cat_name = getFyndNiceName($cat);
-$type_name = getFyndNiceName($type);
+$cat_obj = getFyndTaxonomy($cat);
+if ($type == 'kop') {
+  $type_name = 'Köpes';
+} else {
+  $type_name = 'Säljes';
+}
 $fynds = getFyndArray(100, 0, $cat);
-
 
 
 global $woo_options;
 get_header();
 ?>
+<script type="text/javascript">
+  jQuery(document).ready(function($){   
+    
+    $('#fynd-drop').change(function() {
+      var url;
+      var fyndtype;
+      url =  $('#fynd-drop').val();
+      fyndtype =  $('#fyndtype').val();
+      window.location.href = url + "?fyndtype=" + fyndtype;        
+    });
+
+  });
+</script>
 <?php woo_content_before(); ?>
 <div id="content" class="col-full">
   <div id="main-sidebar-container">    
@@ -30,16 +46,14 @@ get_header();
         <?php the_content(); ?>
         <div id="fynd-cat-list">
           <div class="fynd-cat-list-head fynd-list-head" >
-            Just nu visas <span><?php echo $type; ?><?php echo $cat . ' ' . $type; ?></span>
-            <select>kakak</select>
+            Just nu visas <span><?php echo $type_name . ' : ' . $cat_obj->name; ?></span>
+            <?php echo getFyndDropdown('', $cat, $type); ?>
           </div>
 
           <?php
-          //echo $cat . ' ' . $type;
+          //echo 'cat: '. $cat . ' type:' . $type;
           //print_r($fynds);
-          echo $type_name;
-          
-          
+          //print_r($cat_obj);
           $i = 0;
           foreach ($fynds as $fynd) {
             if ($fynd->fynd_type == $type) {

@@ -23,6 +23,8 @@ li.widget.widget_text {list-style: none outside none;}
 #chef-text{float:left;width:340px;}
 #chef-buttons{float: left;height: 50px;width: 610px;}
 .chef-button{padding:7px 20px;background-image: url(images/blue-gradient.png); border-radius: 15px 15px;color:#fff;font-size: 15px;cursor:pointer;}
+.back-button input{padding: 0 15px;}
+.back-button:hover{text-decoration: none;}
 #buy-button{margin-left: 20px;}
 
 #fynd-list-all{margin-bottom: 20px;}
@@ -40,7 +42,7 @@ li.widget.widget_text {list-style: none outside none;}
 .fynd-list-head-text a{color:#fff;font-size: 15px; font-weight: bold;}
 .fynd-list-head-title{color:#fff;font-size: 15px; width:300px;display: inline;}
 
-
+#fynd-cat-list{margin-top: 10px;}
 .fynd-cat-list-head{font-size:15px;  color: #FFFFFF;}
 .fynd-cat-list-obj{float:left;width:235px;margin-top: 0px;margin-left: 10px;background-color: #fff;padding:20px;}
 .fynd-cat-list-obj a img{width:230px; height:230px;padding: 5px;border:solid 1px #ddd;background-color: #fff;text-align: center;}
@@ -49,7 +51,7 @@ li.widget.widget_text {list-style: none outside none;}
 .obj-info{font-weight: bold;background-color: #ddd;color: #555555;float:right;padding:3px 15px;border-radius: 10px 10px;}
 
 .fynd-content{border-bottom: 2px solid #ddd;}
-.fynd-img{text-align: center;}
+.fynd-img{text-align: center;margin-top: 10px;}
 .fynd-img img{border:1px solid #ddd;padding:5px;background-color: #fff;}
 .fynd-title{margin:20px 0 0 20px;}
 .fynd-text{float:left;width:280px;margin: 20px;}
@@ -121,7 +123,7 @@ div.SlideshowWidget h3{font-size:22px;}
 
 .fynd-cat{
     cursor:pointer;
-    font-size: 18px;
+    font-size: 15px;
 }
 .article-list-link{padding-left:20px;}
 ul.article-list .article-list-link:first-child{margin-top: 0;}

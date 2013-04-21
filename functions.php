@@ -228,8 +228,14 @@ function getFyndList($sell = true) {
   wp_reset_query();
 }
 
-function getFyndNiceName($slug) {
-  return get_term_by(16, 'name', 'fyndkategori');
+/**
+ * Return the taxonomy object
+ * 
+ * @param type $slug
+ * @return type 
+ */
+function getFyndTaxonomy($slug) {
+  return get_term_by('slug', $slug, 'fyndkategori');
 }
 
 /**
@@ -321,20 +327,47 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
  * @param type $fyndtype
  * @return string 
  */
-function getFyndDropdown($selectedId, $fyndtype) {
-  $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'ASC', 'posts_per_page' => '-1', 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndtype))));
+function getFyndDropdown($selectedId, $fyndcat, $type = 'kop') {
+  $fynds = getFyndArray(100, 0, $fyndcat);
+  //print_r($fynds);
   $output = '<select class="" id="fynd-drop" name="fynd-drop">';
-  while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
+  foreach ($fynds as $fynd) {
+    if ($fynd->fynd_type == $type) {
+      if ($fynd->ID == $selectedId) {
+        $sel = ' selected="selected" ';
+      } else {
+        $sel = '';
+      }
+      $output .= '<option value="' . $fynd->guid . '"  ' . $sel . '>' . $fynd->post_title . '</option>';
+    }
+  }
+  $output .= '</select>';
+  return $output;
+
+
+
+
+  /*
+    $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'ASC', 'posts_per_page' => '-1', 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndcat))));
+
+
+
+    $output = '<select class="" id="fynd-drop" name="fynd-drop">';
+    while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
+    //if($type == )
     if ($selectedId == get_the_ID()) {
-      $sel = ' selected="selected" ';
+    $sel = ' selected="selected" ';
     } else {
-      $sel = '';
+    $sel = '';
     }
     $output .= '<option value="' . get_permalink() . '"  ' . $sel . '>' . get_the_title() . '</option>';
-  endwhile;
-  $output .= '</select>';
-  wp_reset_query();
-  return $output;
+    endwhile;
+    $output .= '</select>';
+    wp_reset_query();
+    return $output;
+   * 
+   * 
+   */
 }
 
 /**
@@ -345,8 +378,15 @@ function getFyndDropdown($selectedId, $fyndtype) {
 function getFyndObject($postId) {
   $fynd = get_post($postId);
   $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+  $meta = get_post_meta($fynd->ID);
+  $fynd->name = $meta['name'][0];
+  $fynd->email = $meta['email'][0];
+  $fynd->price = $meta['price'][0];
+  $fynd->phone = $meta['phone'][0];
   if (!empty($fynd->fyndkategori)) {
     foreach ($fynd->fyndkategori as $category) {
+      $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
+
       switch ($category->slug) {
         case 'kop':
           $fynd->fynd_type = 'kop';
@@ -358,6 +398,7 @@ function getFyndObject($postId) {
           break;
         default:
           $fynd->fynd_cat_slug = $category->slug;
+          $fynd->fynd_cat_name = $category->name;
           break;
       }
     }

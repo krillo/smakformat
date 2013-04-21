@@ -18,8 +18,8 @@ global $woo_options;
  */
 $fyndObject = getFyndObject(get_the_ID());
 $fyndtype = $fyndObject->fynd_type;
-$fyndtype_txt = $fyndObject->fynd_type_name;
-$fynd_cat_slug = $fyndObject->fynd_cat_slug;
+$type_name = $fyndObject->fynd_type_name;
+//print_r($fyndObject);
 ?>
 
 <!-- #content Starts -->
@@ -44,7 +44,13 @@ $fynd_cat_slug = $fyndObject->fynd_cat_slug;
       </script>
 
       <input id="fyndtype" value="<?php echo $fyndtype; ?>"  name="fyndtype" type="hidden" />
-      <div class="fynd-list-head margin"  ><div class="fynd-list-head-text"><a href="/fyndhyllan/">Fyndhyllan</a> &nbsp;&nbsp; just nu visas <?php echo $fyndtype_txt ?>: </div><div class="fynd-list-head-title"><?php echo getFyndDropdown(get_the_ID(), $fyndtype); ?></div></div>
+      <div class="fynd-cat-list-head fynd-list-head" >
+        Just nu visas <span><?php echo $type_name . ' : ' . $fyndObject->fynd_cat_name; ?></span>
+        <?php echo getFyndDropdown(get_the_ID(), $fyndObject->fynd_cat_slug, $fyndtype); ?>
+      </div>
+
+
+
       <div id="post-<?php the_ID(); ?>" <?php post_class(); ?> >
         <div id="" class="fynd-img">
           <?php
@@ -64,7 +70,7 @@ $fynd_cat_slug = $fyndObject->fynd_cat_slug;
             <li>Tel: <a href="tel:+46<?php the_field("phone"); ?>"><?php the_field("phone"); ?></a></li>
             <li>Email: <a href="mailto:<?php the_field("email"); ?>"><?php the_field("email"); ?></a></li>
             <li>&nbsp;</li>
-            <li><a href="javascript:history.go(-1);">Tillbaka</a></li>
+            <li><a href="javascript:history.go(-1);" class="back-button"><input type="button" class="chef-button" value="Tillbaka" id=""></a></li>
           </ul>
         </div>
       </div><!--/#post-->
