@@ -20,6 +20,7 @@ if ($type == 'kop') {
 $fynds = getFyndArray(100, 0, $cat);
 
 
+
 global $woo_options;
 get_header();
 ?>
@@ -47,7 +48,7 @@ get_header();
         <div id="fynd-cat-list">
           <div class="fynd-cat-list-head fynd-list-head" >
             Just nu visas <span><?php echo $type_name . ' : ' . $cat_obj->name; ?></span>
-            <?php echo getFyndDropdown('', $cat, $type); ?>
+            <?php echo getFyndDropdown(0, $cat, $type); ?>
           </div>
 
           <?php
@@ -56,12 +57,13 @@ get_header();
           //print_r($cat_obj);
           $i = 0;
           foreach ($fynds as $fynd) {
+            $excerp = mb_substr($fynd->post_content, 0, 70). '...';
             if ($fynd->fynd_type == $type) {
               $out .= '<div class="fynd-cat-list-obj">';
               $out .= '  <a href="' . $fynd->guid . '">';
               $out .= get_the_post_thumbnail($fynd->ID, array(230, 230));
               //$out .=     '<div class="fynd-puff-heading">' . $fynd->post_title . '</div>';
-              $out .= '<p>' . substr($fynd->post_content, 0, 70) . '</p>';
+              $out .= '<p>' . $excerp . '</p>';
               $out .= '<div class="obj-price">Pris: ' . $fynd->price . '</div>';
               $out .= '<div class="obj-info">MER INFO</div>';
               $out .= '  </a>';

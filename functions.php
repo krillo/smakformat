@@ -331,6 +331,10 @@ function getFyndDropdown($selectedId, $fyndcat, $type = 'kop') {
   $fynds = getFyndArray(100, 0, $fyndcat);
   //print_r($fynds);
   $output = '<select class="" id="fynd-drop" name="fynd-drop">';
+  if($selectedId <= 0){
+     $output .= '<option value=""> ... </option>';
+  }
+  
   foreach ($fynds as $fynd) {
     if ($fynd->fynd_type == $type) {
       if ($fynd->ID == $selectedId) {
