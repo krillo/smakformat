@@ -420,10 +420,12 @@ function getfyndCategoriesLi($type){
  * "Köp" and "Sälj" are also categories, these are excluded
  *  
  */
-function getFyndCategoriesDropdown($selectedCat = '') {
+function getFyndCategoriesDropdown($selectedCat = '', $all = true) {
   $categories = getFyndCategories();
   $output = '<select class="" id="fynd-cat-drop" name="fynd-cat">';
-  $output .= '<option value="all" ' . sel('all', $selectedCat) . '>Alla</option>';
+  if($all){
+    $output .= '<option value="all" ' . sel('all', $selectedCat) . '>Alla</option>';
+  }
   foreach ($categories as $cat) {
     $output .= '<option value="' . $cat->slug . '" ' . sel($cat->slug, $selectedCat) . '>' . $cat->name . '</option>';
   }

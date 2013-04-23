@@ -30,7 +30,7 @@ get_header();
                 <div id="chef-buttons"><input type="button" id="sell-button" value="Jag vill sälja" class="chef-button" /><input type="button" id="buy-button" value="Jag vill köpa" class="chef-button" /></div>
               </div>              
               <?php include 'snippet_fynd_puffs.php'; ?>    
-              <?php getFyndCategoriesDropdown(); ?>
+              <?php getFyndCategoriesDropdown('', false); ?>
 
             </div><!-- /.entry -->
           </div><!-- /.post -->
@@ -82,7 +82,7 @@ get_header();
                 </li>
                 <li>
                   <label for="category">Kategori</label>
-                  <?php echo getFyndCategoriesDropdown(); ?>
+                  <?php echo getFyndCategoriesDropdown('', false); ?>
                 </li>
                 <li>
                   <label for="rubrik">Rubrik <span class="mandatory">*</span></label>
