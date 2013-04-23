@@ -12,9 +12,8 @@ if($type == 'salj'){
 $catsHide = '';
 if (get_page(get_the_ID())->post_name == 'fyndhyllan') {
   $catsHide = 'hidden';
-  $sellClass = '';
-  $buyClass = '';
-  
+  $sellClass = 'fynd-list-selected';
+  $buyClass = 'fynd-list-selected';
 } 
 ?>
 

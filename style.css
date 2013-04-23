@@ -27,7 +27,7 @@ li.widget.widget_text {list-style: none outside none;}
 .back-button:hover{text-decoration: none;}
 #buy-button{margin-left: 20px;}
 
-#fynd-list-all{margin-bottom: 20px;}
+#fynd-list-all{margin-bottom: 50px;}
 .fynd-list-head{padding:5px;background-image: url(images/blue-gradient.png); border-radius: 3px 3px 0 0;}
 .fynd-list-head .fynd-list-selector{color:#fff;border-right: 2px #fff solid;padding: 10px 20px;}
 .fynd-list-head .fynd-list-selector-buy{color:#fff;border-left: 2px #fff solid;float:right; padding: 10px 20px; position: relative;top: -10px;}

@@ -333,7 +333,7 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') 
  */
 //krillo kolla denna
 function getFyndDropdown($selectedId, $fyndcat, $type = 'kop') {
-  $fynds = getFyndArray(100, 0, $fyndcat, $type);
+  $fynds = getFyndArray(1000, 0, $fyndcat, $type);
   //print_r($fynds);
   $output = '<select class="" id="fynd-drop" name="fynd-drop">';
   if ($selectedId <= 0) {
