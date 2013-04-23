@@ -29,18 +29,22 @@ li.widget.widget_text {list-style: none outside none;}
 
 #fynd-list-all{margin-bottom: 20px;}
 .fynd-list-head{padding:5px;background-image: url(images/blue-gradient.png); border-radius: 3px 3px 0 0;}
-.fynd-list-head .fynd-list-selector{color:#eee;border-right: 2px #fff solid;padding: 10px 20px;}
+.fynd-list-head .fynd-list-selector{color:#fff;border-right: 2px #fff solid;padding: 10px 20px;}
 .fynd-list-head .fynd-list-selector-buy{color:#fff;border-left: 2px #fff solid;float:right; padding: 10px 20px; position: relative;top: -10px;}
+.fynd-list-selector-buy:hover, .fynd-list-selector:hover{cursor: pointer;}
+
 #fynd-list-buy{}
 #fynd-list-sell{}
 .fynd-list{overflow-x: hidden;overflow-y: auto;min-height:100px;max-height:800px;}
-.fynd-list-selected{font-weight: bold;font-size: 15px;}
+.fynd-list-selected{font-weight: bold;font-size: 16px;}
+.fynd-list-head .fynd-list-disabled{color:#eee;font-size: 12px;font-weight:normal;}
 .fynd-list li:first-child{margin-top: 10px;}
 .fynd-list li{margin-left: 10px;}
 
 .fynd-list-head-text{color:#fff;font-size: 15px; width:200px;display: inline;}
 .fynd-list-head-text a{color:#fff;font-size: 15px; font-weight: bold;}
 .fynd-list-head-title{color:#fff;font-size: 15px; width:300px;display: inline;}
+.fynd-list li a{font-size: 16px;}
 
 #fynd-cat-list{margin-top: 10px;}
 .fynd-cat-list-head{font-size:15px;  color: #FFFFFF;}
@@ -79,7 +83,7 @@ input[type="file"]{width:100px;}
 #fynd_form_content label#terms-label{width:205px;font-size: 11px;}
 #fynd_form_content label#terms-label a{color:#fff;text-decoration: underline; }
 #fynd_form_content INPUT#terms{width:15px;}
-#fynd-cat-drop{margin-bottom:10px;}
+#fynd-cat-drop{margin-bottom:4px;}
 
 #fynd_form INPUT.invalid {border-color: red;border-style: solid;border-width: 1px;}
 #fynd_pop{padding:10px 20px;width:280px;border-radius: 10px 10px;border: 2px solid #E2E2E2;float:left;overflow: hidden;background-color: #FFFFFF;}

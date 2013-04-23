@@ -279,7 +279,10 @@ function getAllFyndListsByType($fyndtype = 'salj') {
  * 
  * @param type $nbr 
  */
-function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
+function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') {
+  if ($fyndCatSlug == 'all') {
+    $fyndCatSlug = $type;
+  }
   if ($fyndCatSlug != '') {
     $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndCatSlug))));
   } else {
@@ -294,22 +297,23 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
     $fynd->email = $meta['email'][0];
     $fynd->price = $meta['price'][0];
     $fynd->phone = $meta['phone'][0];
-    foreach ($fynd->fyndkategori as $category) {
-      switch ($category->slug) {
+    foreach ($fynd->fyndkategori as $fyndtype) {
+      $fynd->fynd_type = $fyndtype->slug;
+      switch ($fyndtype->slug) {
         case 'kop':
-          $fynd->fynd_type = 'kop';
           $fynd->fynd_type_name = 'köpes';
           break;
         case 'salj':
-          $fynd->fynd_type = 'salj';
           $fynd->fynd_type_name = 'säljes';
           break;
         default:
           break;
       }
     }
-    if ($fynd->ID != $exclude_id) {
-      $fyndArray[] = $fynd;
+    if ($type == '' OR $fynd->fynd_type == $type) {   //add only selected type 
+      if ($fynd->ID != $exclude_id) {  //exclude from id
+        $fyndArray[] = $fynd;
+      }
     }
     if (count($fyndArray) == $nbr) {
       break;
@@ -327,14 +331,15 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '') {
  * @param type $fyndtype
  * @return string 
  */
+//krillo kolla denna
 function getFyndDropdown($selectedId, $fyndcat, $type = 'kop') {
-  $fynds = getFyndArray(100, 0, $fyndcat);
+  $fynds = getFyndArray(100, 0, $fyndcat, $type);
   //print_r($fynds);
   $output = '<select class="" id="fynd-drop" name="fynd-drop">';
-  if($selectedId <= 0){
-     $output .= '<option value=""> ... </option>';
+  if ($selectedId <= 0) {
+    $output .= '<option value=""> ... </option>';
   }
-  
+
   foreach ($fynds as $fynd) {
     if ($fynd->fynd_type == $type) {
       if ($fynd->ID == $selectedId) {
@@ -347,31 +352,6 @@ function getFyndDropdown($selectedId, $fyndcat, $type = 'kop') {
   }
   $output .= '</select>';
   return $output;
-
-
-
-
-  /*
-    $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'ASC', 'posts_per_page' => '-1', 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndcat))));
-
-
-
-    $output = '<select class="" id="fynd-drop" name="fynd-drop">';
-    while ($fyndQuery->have_posts()) : $fyndQuery->the_post();
-    //if($type == )
-    if ($selectedId == get_the_ID()) {
-    $sel = ' selected="selected" ';
-    } else {
-    $sel = '';
-    }
-    $output .= '<option value="' . get_permalink() . '"  ' . $sel . '>' . get_the_title() . '</option>';
-    endwhile;
-    $output .= '</select>';
-    wp_reset_query();
-    return $output;
-   * 
-   * 
-   */
 }
 
 /**
@@ -414,12 +394,25 @@ function getFyndObject($postId) {
 
 /**
  * Returns an array of all categories for fynd
- * "Köp" and "Sälj" are also categories, these are excluded
+ * "Köp" and "Sälj" are also categoriesthese are excluded
  *  
  */
 function getFyndCategories() {
-  $categories = get_terms('fyndkategori', array('orderby' => 'name', 'hide_empty' => 0));
-  return $categories;
+  $allCats = get_terms('fyndkategori', array('orderby' => 'name', 'hide_empty' => 0));
+  foreach ($allCats as $cat) {
+    if ($cat->slug != 'kop' && $cat->slug != 'salj') {
+      $cats[] = $cat;
+    }
+  }
+  return $cats;
+}
+
+function getfyndCategoriesLi($type){
+  $cats = getFyndCategories();
+  foreach ($cats as $cat) {
+    $output .= '<li data-cat="'.$cat->slug.'" class=""><a href="/fyndhyllan-kategorier/?type='.$type.'&cat='.$cat->slug.'" >' . $cat->name . '</a></li>';
+  }
+  return $output;
 }
 
 /**
@@ -427,16 +420,19 @@ function getFyndCategories() {
  * "Köp" and "Sälj" are also categories, these are excluded
  *  
  */
-function getFyndCategoriesDropdown() {
+function getFyndCategoriesDropdown($selectedCat) {
   $categories = getFyndCategories();
   $output = '<select class="" id="fynd-cat-drop" name="fynd-cat">';
+  $output .= '<option value="all" ' . sel('all', $selectedCat) . '>Alla</option>';
   foreach ($categories as $cat) {
-    if ($cat->slug != 'kop' && $cat->slug != 'salj') {
-      $output .= '<option value="' . $cat->slug . '">' . $cat->name . '</option>';
-    }
+    $output .= '<option value="' . $cat->slug . '" ' . sel($cat->slug, $selectedCat) . '>' . $cat->name . '</option>';
   }
   $output .= '</select>';
   return $output;
+}
+
+function sel($var1, $var2) {
+  return ($var1 == $var2 ? ' selected="selected" ' : '');
 }
 
 /**

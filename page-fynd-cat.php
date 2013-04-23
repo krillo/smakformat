@@ -9,30 +9,27 @@
  * @package Smakformat
  * @subpackage Template
  */
-$cat = $_REQUEST['cat'];
-$type = $_REQUEST['type'];
+!empty($_REQUEST['cat']) ? $cat = $_REQUEST['cat'] : $cat = '';
+!empty($_REQUEST['type']) ? $type = $_REQUEST['type'] : $type = 'salj';
 $cat_obj = getFyndTaxonomy($cat);
 if ($type == 'kop') {
-  $type_name = 'Köpes';
+  $type_name = 'Köp';
 } else {
-  $type_name = 'Säljes';
+  $type_name = 'Sälj';
 }
-$fynds = getFyndArray(100, 0, $cat);
-
-
+$fynds = getFyndArray(1000, 0, $cat, $type);
+//print_r($fynds);
 
 global $woo_options;
 get_header();
 ?>
 <script type="text/javascript">
   jQuery(document).ready(function($){   
-    
-    $('#fynd-drop').change(function() {
-      var url;
-      var fyndtype;
-      url =  $('#fynd-drop').val();
-      fyndtype =  $('#fyndtype').val();
-      window.location.href = url + "?fyndtype=" + fyndtype;        
+
+    $('#fynd-cat-drop').change(function() {
+      var cat = $('#fynd-cat-drop').val();
+      var type =  $('#fyndtype').val();
+      window.location.href = "/fyndhyllan-kategorier/?type=" + type + "&cat=" + cat;        
     });
 
   });
@@ -44,11 +41,12 @@ get_header();
     <div id="main"> 
       <div style="width:97%">
 
-        <?php the_content(); ?>
+        <input id="fyndtype" type="hidden" value="<?php echo $type; ?>" />
+        <h1>Välkommen till Fyndhyllan - <?php echo $type_name; ?></h1>
         <div id="fynd-cat-list">
           <div class="fynd-cat-list-head fynd-list-head" >
-            Just nu visas <span><?php echo $type_name . ' : ' . $cat_obj->name; ?></span>
-            <?php echo getFyndDropdown(0, $cat, $type); ?>
+            Just nu visas 
+            <?php echo getFyndCategoriesDropdown($cat); ?>
           </div>
 
           <?php
