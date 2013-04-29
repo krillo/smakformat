@@ -37,5 +37,6 @@
 	
 	<?php wp_footer(); ?>
 	<?php woo_foot(); ?>
+  <script type="text/javascript" src="http://track.adtraction.com/t/t?as=1037548922&t=1&tk=0&trt=2" charset="ISO-8859-1"></script>
 	</body>
 </html>
