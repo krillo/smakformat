@@ -324,6 +324,17 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') 
   return $fyndArray;
 }
 
+
+/**
+ * Print all fynds as comment 
+ */
+function debugFynd(){
+  echo "<!-- >";
+  print_r(getFyndArray(1000));
+  echo "< -->";
+}
+
+
 /**
  * Creates a dropdown of fynd-articles by fyndtype and sell or by. It also selects the showing article 
  * 

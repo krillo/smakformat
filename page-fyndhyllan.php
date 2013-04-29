@@ -32,7 +32,7 @@ get_header();
               <div class="clear"></div>
               <?php include 'snippet_fynd_puffs.php'; ?>    
               <?php getFyndCategoriesDropdown('', false); ?>
-
+              <?php debugFynd(); ?>
             </div><!-- /.entry -->
           </div><!-- /.post -->
           <?php
