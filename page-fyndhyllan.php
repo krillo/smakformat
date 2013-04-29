@@ -28,7 +28,8 @@ get_header();
                 <div class="clear"></div>
                 <h2>Lägg in en annons</h2>
                 <div id="chef-buttons"><input type="button" id="sell-button" value="Jag vill sälja" class="chef-button" /><input type="button" id="buy-button" value="Jag vill köpa" class="chef-button" /></div>
-              </div>              
+              </div>
+              <div class="clear"></div>
               <?php include 'snippet_fynd_puffs.php'; ?>    
               <?php getFyndCategoriesDropdown('', false); ?>
 
