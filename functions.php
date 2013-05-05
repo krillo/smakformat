@@ -288,7 +288,8 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') 
   } else {
     $fyndQuery = new WP_Query(array('orderby' => 'rand', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd')));
   }
-  $fynds = $fyndQuery->posts;
+  $fynds = $fyndQuery->posts;  
+  
   $fyndArray = array();
   foreach ($fynds as $fynd) {
     $fynd->fyndkategori = get_the_terms($fynd->ID, 'fyndkategori');
@@ -296,14 +297,15 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') 
     $fynd->name = $meta['name'][0];
     $fynd->email = $meta['email'][0];
     $fynd->price = $meta['price'][0];
-    $fynd->phone = $meta['phone'][0];
+    $fynd->phone = $meta['phone'][0];    
     foreach ($fynd->fyndkategori as $fyndtype) {
-      $fynd->fynd_type = $fyndtype->slug;
       switch ($fyndtype->slug) {
         case 'kop':
+          $fynd->fynd_type = $fyndtype->slug;
           $fynd->fynd_type_name = 'köpes';
           break;
         case 'salj':
+          $fynd->fynd_type = $fyndtype->slug;
           $fynd->fynd_type_name = 'säljes';
           break;
         default:
