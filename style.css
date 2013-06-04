@@ -133,3 +133,19 @@ div.SlideshowWidget h3{font-size:22px;}
 ul.article-list .article-list-link:first-child{margin-top: 0;}
 
 .adspace-widget {list-style: none;}
+
+
+@media print{
+  .demo_store{display:none;}
+  #header-container {display:none;}
+  #logo{display:block;}
+  #sidebar {display:none;}
+  #nav-container {display:none;}
+  .addtoany_share_save_container{display:none;}
+  #connect{display:none;}
+  .post-utility{display:none;}
+  .post-entries{display:none;}
+  #comments{display:none;}
+  #respond{display:none;}
+  #footer-container{display:none;}
+  }
