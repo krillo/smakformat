@@ -284,7 +284,7 @@ function getFyndArray($nbr = 3, $exclude_id = 0, $fyndCatSlug = '', $type = '') 
     $fyndCatSlug = $type;
   }
   if ($fyndCatSlug != '') {
-    $fyndQuery = new WP_Query(array('orderby' => 'title', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndCatSlug))));
+    $fyndQuery = new WP_Query(array('orderby' => 'date', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd'), 'tax_query' => array(array('taxonomy' => 'fyndkategori', 'field' => 'slug', 'terms' => $fyndCatSlug))));
   } else {
     $fyndQuery = new WP_Query(array('orderby' => 'rand', 'order' => 'DESC', 'posts_per_page' => $nbr + 1, 'post_type' => array('fynd')));
   }
